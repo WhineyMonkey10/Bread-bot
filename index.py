@@ -5,6 +5,18 @@ from discord import Intents
 from IPython.display import Image
 import requests, json 
 import time
+import os
+from os import system
+import sys
+from os import system
+import sys
+import os
+python = sys.executable
+
+
+
+
+cooldown = 0
 
 with open('log.txt', "a") as f:
     f.write("\nStarting bot... \n Started sucessfuly at: " + time.ctime())
@@ -47,12 +59,12 @@ async def feedpeasant(ctx, arg='None'):
             with open('log.txt', "a") as f:
                 f.write("\nA mod has fed all peasants \n Command has been run at: " + time.ctime())
                 f.close()
-         elif arg == ctx.message.author.name:
+         elif arg == ctx.message.author.mention:
             await ctx.send('You cannot feed yourself goofy')
             with open('log.txt', "a") as f:
                 f.write("\nA mod has tried to feed themselves \n Command has been run at: " + time.ctime())
                 f.close()
-        if arg != 'all':
+        if arg != 'all' and arg != ctx.message.author.mention:
             await ctx.send(f'Feeding {arg} :bread:')
             with open('log.txt', "a") as f:
                 f.write("\nA mod has fed {arg} \n Command has been run at: " + time.ctime())
@@ -63,15 +75,32 @@ async def feedpeasant(ctx, arg='None'):
             f.write("\nA peasant tried to feed someone \n Command has been run at: " + time.ctime())
             f.close()
 @client.command()
-async def bullyriki(ctx):
-    for i in range(5):
-        await ctx.send("<@" + str(921835020371521638) + "> :bread:")
-        with open('log.txt', "a") as f:
-            f.write("\nRiki has been bullied \n Command has been run at: " + time.ctime())
-            f.close()
+async def bully(ctx, arg='None'):
+    if cooldown == 1:
+        await ctx.send(f'You are on cooldown, peasant for {timeleft - time.time()} seconds')
+    else:
+        if arg == '724342400641925180' or arg == '@breb':
+            await ctx.send('Dont bully our lord and savior')
+        else:
+            for i in range(5):
+                if '@' in arg:
+                    await ctx.send(str(arg) + ":bread:")
+                    cooldown = 1
+                    timeleft = time.coundown(10)
+                    with open('log.txt', "a") as f:
+                        f.write("\n Someone has been bullied \n Command has been run at: " + time.ctime())
+                        f.close()
+                else:
+                    await ctx.send("<@" + str(arg) + ">:bread:")
+                    cooldown = 1
+                    timeleft = time.coundown(10)
+
+                    with open('log.txt', "a") as f:
+                        f.write("\n Someone has been bullied \n Command has been run at: " + time.ctime())
+                        f.close()
 @client.command()
 async def breadedcat(ctx):
-    await ctx.send('https://imgur.com/a/phltPxS')
+    await ctx.send(file=discord.File("cats.jpg"))
     with open('log.txt', "a") as f:
         f.write("\nBreadedcat command \n Command has been run at: " + time.ctime())
         f.close()
@@ -87,7 +116,7 @@ async def commandlist(ctx, arg = 'None'):
     
     if arg == 'None':
         embedVar = discord.Embed(title="Peasant Commands", description="Commands for stinky peasants :heart:", color=0x00ff00)
-        embedVar.add_field(name="Peasant commands", value="!bread, !catcutie, !bullyriki, !breadedcat, !sunglassescat, !commandlist", inline=False)
+        embedVar.add_field(name="Peasant commands", value="!bread, !catcutie, !bully (user id) or (ping user), !breadedcat, !sunglassescat, !wetbread ,!commandlist, !wetbread", inline=False)
         embedVar.add_field(name="Special Commands", value="For now, the only other command you have is !feedpeasant (peasant). More will be added later", inline=False)
         await ctx.send(embed=embedVar)
         with open('log.txt', "a") as f:
@@ -116,7 +145,43 @@ async def dumpLogs(ctx):
     else:
         await ctx.send('No, just, no')
 
+@client.command()
+async def newUpdate(message='None'):
+    channel = client.get_channel(1039251976682229824)
+    await channel.send("**New update to the bread bot!**\nRun the command !updateInfo to see the new command!")
+
+@client.command()
+async def updateInfo(ctx):
+    await ctx.send("New update: Improved the !bully command")
+
+
+@client.command()
+async def wetbread(ctx):
+    await ctx.send("https://imgur.com/a/HqrvEEO")
+    
+@client.command()
+async def restartBread(ctx, reason = 'None'):
+    role = discord.utils.find(lambda r: r.name == 'tech support', ctx.message.author.roles)
+    if role in ctx.author.roles:
+        await ctx.send("Restarting bread bot...")
+        with open('log.txt', "a") as f:
+            f.write(f"\nBread bot has been restarted for the reason {reason} \n Command has been run at: " + time.ctime())
+            f.close()
+        os.system("python breadbot.py")
+        os.execl(python, python, * sys.argv)
+    else:
+        await ctx.send('WHY?!?!?')
+        with open('log.txt', "a") as f:
+            f.write("\nSomeone has tried to restart the bot \n Command has been run at: " + time.ctime())
+            f.close()
+
+
 #user = ctx.message.author
 #await ctx.send(f'{user.mention} !bread is a command that sends a message saying "BREAD FOR LIFE BREAD FOR LOVE :bread:"') 
     
-client.run("")
+client.run("token")
+
+while True:
+    if cooldown == 1:
+        time.sleep(300)
+        cooldown = 0
