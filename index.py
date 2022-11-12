@@ -12,6 +12,7 @@ from os import system
 import sys
 import os
 from discord.ext.commands import has_role
+
 python = sys.executable
 
 
@@ -34,9 +35,9 @@ with open('log.txt', "a") as f:
     f.close()
 
 
-@client.tree.command(name="ping", description="Pong!")
+@client.tree.command(name="easter", description="egg")
 async def ping(interaction: discord.Interaction) -> None:
-    await interaction.response.send_message("Pong!")
+        await interaction.respond("Egg", ephemeral=True)
 
 
 
@@ -163,15 +164,49 @@ async def wetbread(interaction: discord.Interaction):
 @client.tree.command(name = "restartbread", description="Restart the bread bot")
 @discord.app_commands.checks.has_role("tech support")
 
-async def restart_bread(interaction: discord.Interaction, reason: str):
-    await on_slash_command_error(interaction)
+async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
+    if type == "restart":
+        await interaction.response.send_message("Restarting bread bot... this may take up to a minute")
+        with open('log.txt', "a") as f:
+            f.write(f"\nBread bot has been restarted for the reason {reason} \n Command has been run at: " + time.ctime())
+            f.close()
+        os.system("python breadbot.py")
+        os.execl(python, python, * sys.argv)
+    elif type == "shutdown":
+        
+        await interaction.response.send_message("Shutting down bread bot...")
+        with open('log.txt', "a") as f:
+            f.write(f"\nBread bot has been shutdown for the reason {reason} \n Command has been run at: " + time.ctime())
+            f.close()
+        for i in range(2):
+            exit()
+    elif type == "update":
+        await interaction.response.send_message("Updating bread bot from github...")
+        channel = client.get_channel(1039251976682229824)
+        await channel.send("**New update to the bread bot!**\nRun the command /updateinfo to see the new command!")
+        with open('log.txt', "a") as f:
+            f.write(f"\nBread bot has been updated for the reason {reason} \n Command has been run at: " + time.ctime())
+            f.close()
+        os.system("git pull https://github.com/WhineyMonkey10/Bread-bot")
+        os.execl(python, python, * sys.argv)
 
-    await interaction.response.send_message("Restarting bread bot...")
-    with open('log.txt', "a") as f:
-        f.write(f"\nBread bot has been restarted for the reason {reason} \n Command has been run at: " + time.ctime())
-        f.close()
-    os.system("python breadbot.py")
-    os.execl(python, python, * sys.argv)
+    elif type == "debug":
+        await interaction.response.send_message("Debugging bread bot... allow up to 5 minutes for the bot to try to locate the issue")
+        await interaction.channel.send(file=discord.File("log.txt"))
+        await interaction.channel.send("Logs dumped")
+        await interaction.channel.send("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=,./<>?;':[]{}|#~`")
+        await interaction.channel.send("Restart, then the bot should be working again this will take up to 1 minute. If the bot is still not working, please contact tech support or if the issue is not fixed, please report the bug to fix it in the next update")
+        await interaction.channel.send("Restarting bread bot...")
+        with open('log.txt', "a") as f:
+            f.write(f"\nBread bot has been debugged for the reason {reason} \n Command has been run at: " + time.ctime())
+            f.close()
+        os.system("python breadbot.py")
+        os.execl(python, python, * sys.argv)
+
+    else:
+        await interaction.response.send_message("Invalid type! Valid types are: restart, shutdown, update, debug")
+
+
 
 
 
@@ -203,7 +238,10 @@ async def breadattack(interaction: discord.Interaction):
 #user = ctx.message.author
 #await ctx.send(f'{user.mention} !bread is a command that sends a message saying "BREAD FOR LIFE BREAD FOR LOVE :bread:"') 
     
-client.run("token")
+
+from dotenv import load_dotenv
+load_dotenv()
+client.run(os.getenv('TOKEN'))
 
 while True:
     if cooldown == 1:
