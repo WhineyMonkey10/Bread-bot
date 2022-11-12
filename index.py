@@ -11,6 +11,7 @@ import sys
 from os import system
 import sys
 import os
+from discord.ext.commands import has_role
 python = sys.executable
 
 
@@ -24,18 +25,18 @@ class SlashClient(discord.Client):
         self.tree.copy_global_to(guild=discord.Object(id=12345678900987654))
         await self.tree.sync()
 
+async def on_slash_command_error(self, ctx, error):
+    await ctx.respond(f"Error: {error}")
 
 client = SlashClient()
 with open('log.txt', "a") as f:
     f.write("\nStarting bot... \n Started sucessfuly at: " + time.ctime())
     f.close()
 
-cooldown = 0
 
 @client.tree.command(name="ping", description="Pong!")
 async def ping(interaction: discord.Interaction) -> None:
     await interaction.response.send_message("Pong!")
-
 
 
 
@@ -61,9 +62,8 @@ async def catcutie(interaction: discord.Interaction) -> None:
         f.close()
 
 @client.tree.command(name = "feedpeasant", description = "Feed the peasants")
+@discord.app_commands.checks.has_role("mod")
 async def feedpeasant(interaction: discord.Interaction, arg:str) -> None:
-    role = discord.utils.find(lambda r: r.name == 'mod', interaction.message.author.roles)
-    if role in interaction.author.roles:
         if arg == 'None':
           await interaction.response.send_message('You must specify a peasant to feed')
         else:
@@ -82,35 +82,27 @@ async def feedpeasant(interaction: discord.Interaction, arg:str) -> None:
             with open('log.txt', "a") as f:
                 f.write("\nA mod has fed {arg} \n Command has been run at: " + time.ctime())
                 f.close()
-    else:
-        await interaction.response.send_message('You are not a mod, you peasant. Get back to bread farming.')
-        with open('log.txt', "a") as f:
-            f.write("\nA peasant tried to feed someone \n Command has been run at: " + time.ctime())
-            f.close()
 @client.tree.command(name="bully", description="bullies a user")
 async def bully(interaction: discord.Interaction, arg:str) -> None:
-    if cooldown == 1:
-        await interaction.response.send_message(f'You are on cooldown, peasant for {timeleft - time.time()} seconds')
+    #if cooldown == 1:
+       # await interaction.response.send_message(f'You are on cooldown, peasant for {timeleft - time.time()} seconds')
+    if arg == '724342400641925180' or arg == '@breb':
+        await interaction.response.send_message('Dont bully our lord and savior')
     else:
-        if arg == '724342400641925180' or arg == '@breb':
-            await interaction.response.send_message('Dont bully our lord and savior')
-        else:
-            for i in range(5):
-                if '@' in arg:
-                    await interaction.response.send_message(str(arg) + ":bread:")
-                    cooldown = 1
-                    timeleft = time.coundown(10)
-                    with open('log.txt', "a") as f:
-                        f.write("\n Someone has been bullied \n Command has been run at: " + time.ctime())
-                        f.close()
-                else:
-                    await interaction.response.send_message("<@" + str(arg) + ">:bread:")
-                    cooldown = 1
-                    timeleft = time.coundown(10)
+        for i in range(5):
+            if '@' in arg:
+                await interaction.channel.send(str(arg) + ":bread:")
+                with open('log.txt', "a") as f:
+                    f.write("\n Someone has been bullied \n Command has been run at: " + time.ctime())
+                    f.close()
 
-                    with open('log.txt', "a") as f:
-                        f.write("\n Someone has been bullied \n Command has been run at: " + time.ctime())
-                        f.close()
+
+            else:
+                await interaction.channel.send('<@' + str(arg) + '>:bread:')
+                with open('log.txt', "a") as f:
+                    f.write("\n Someone has been bullied \n Command has been run at: " + time.ctime())
+                    f.close()
+        await interaction.response.send_message("User has been bullied!", ephemeral=True)
 @client.tree.command(name="breadedcat", description="Breaded cat")
 async def breadedcat(interaction: discord.Interaction) -> None:
     await interaction.response.send_message(file=discord.File("cats.jpg"))
@@ -124,32 +116,26 @@ async def sunglassescat(interaction: discord.Interaction) -> None:
         f.write("\nSunglassescat command \n Command has been run at: " + time.ctime())
         f.close()
 @client.tree.command(name="commandlist", description="Command list to help you")
-async def commandlist(interaction: discord.Interaction, arg:str) -> None:
-    role = discord.utils.find(lambda r: r.name == 'mod', interaction.message.author.roles)
-    
-    if arg == 'None':
-        embedVar = discord.Embed(title="Peasant Commands", description="Commands for stinky peasants :heart:", color=0x00ff00)
-        embedVar.add_field(name="Peasant commands", value="!bread, !catcutie, !bully (user id) or (ping user), !breadedcat, !sunglassescat, !wetbread ,!commandlist, !wetbread", inline=False)
-        embedVar.add_field(name="Special Commands", value="For now, the only other command you have is !feedpeasant (peasant). More will be added later", inline=False)
-        await interaction.response.send_message(embed=embedVar)
-        with open('log.txt', "a") as f:
-            f.write("\n(Normal) commandlist \n Command has been run at: " + time.ctime())
-            f.close()
+async def commandlist(interaction: discord.Interaction) -> None:    
 
-    
-    elif arg == 'admin' and role in interaction.author.roles:
-        embedVar = discord.Embed(title="Admin Commands", description="Commands only availible to mods/admins of the server :heart:", color=0x00ff00)
-        embedVar.add_field(name="Peasant commands", value="You are able to access all the commands peasants can. To see their commands, simply run !commandlist", inline=False)
-        embedVar.add_field(name="Special Commands", value="Lol none", inline=False)
-        await interaction.response.send_message(embed=embedVar)
-        with open('log.txt', "a") as f:
-            f.write("\n(Admin) commandlist \n Command has been run at: " + time.ctime())
-            f.close()
-    elif arg == 'admin' and role not in interaction.author.roles:
-        await interaction.response.send_message('Bro youre such a goofy, you dont even have the right permissions to use this command')
-        with open('log.txt', "a") as f:
-            f.write("\n(Admin) commandlist was tried to be run by a peasant \n Command has been run at: " + time.ctime())
-            f.close()
+    embedVar = discord.Embed(title="Peasant Commands", description="Commands for stinky peasants :heart:", color=0x00ff00)
+    embedVar.add_field(name="Peasant commands", value="/bread, /catcutie, /bully (ping user), /breadedcat, /sunglassescat, /wetbread ,/commandlist, /wetbread, /breadattack", inline=False)
+    await interaction.response.send_message(embed=embedVar)
+    with open('log.txt', "a") as f:
+        f.write("\n(Normal) commandlist \n Command has been run at: " + time.ctime())
+        f.close()
+
+@client.tree.command(name="admin_commands", description="admin_commands")
+@discord.app_commands.checks.has_role("mod")
+async def admincommands(interaction: discord.Interaction) -> None:
+    embedVar = discord.Embed(title="Admin Commands", description="Commands only availible to mods/admins of the server :heart:", color=0x00ff00)
+    embedVar.add_field(name="Peasant commands", value="You are able to access all the commands peasants can. To see their commands, simply run /commandlist", inline=False)
+    embedVar.add_field(name="Special Commands", value="/feedpeasant (@peasant/all), /admin_commands. More coming soon!", inline=False)
+    await interaction.response.send_message(embed=embedVar)
+    with open('log.txt', "a") as f:
+        f.write("\n(Admin) commandlist \n Command has been run at: " + time.ctime())
+        f.close()
+
 @client.tree.command(name = "dumplogs", description="Dump the command logs")
 async def dumpLogs(interaction: discord.Interaction):
     role = discord.utils.find(lambda r: r.name == 'tech support', interaction.message.author.roles)
@@ -159,14 +145,15 @@ async def dumpLogs(interaction: discord.Interaction):
         await interaction.response.send_message('No, just, no')
 
 @client.tree.command(name="newupdate", description="New updates to the bread bot")
+@discord.app_commands.checks.has_role("tech support")
 async def newupdate(interaction : discord.Interaction):
     channel = client.get_channel(1039251976682229824)
-    await channel.send("**New update to the bread bot!**\nRun the command !updateInfo to see the new command!")
-    await interaction.response.send_message("Update has been sent to the update channel!")
+    await channel.send("**New update to the bread bot!**\nRun the command /updateinfo to see the new command!")
+    await interaction.response.send_message("Update has been sent to the update channel!", ephemeral=True)
 
 @client.tree.command(name="updateinfo", description="Info about the new update")
 async def update_info(interaction: discord.Interaction):
-    await interaction.response.send_message("**New update:** Migrated to slash commands, there are still many bugs. Please be patient for patches")
+    await interaction.response.send_message("**New update:** Fixed the new bread bot update command")
 
 
 @client.tree.command(name = "wetbread", description="Wet bread")
@@ -174,20 +161,25 @@ async def wetbread(interaction: discord.Interaction):
     await interaction.response.send_message("https://imgur.com/a/HqrvEEO")
     
 @client.tree.command(name = "restartbread", description="Restart the bread bot")
+@discord.app_commands.checks.has_role("tech support")
+
 async def restart_bread(interaction: discord.Interaction, reason: str):
-    role = discord.utils.find(lambda r: r.name == 'tech support', interaction.message.author.roles)
-    if role in interaction.author.roles:
-        await interaction.response.send_message("Restarting bread bot...")
-        with open('log.txt', "a") as f:
-            f.write(f"\nBread bot has been restarted for the reason {reason} \n Command has been run at: " + time.ctime())
-            f.close()
-        os.system("python breadbot.py")
-        os.execl(python, python, * sys.argv)
-    else:
-        await interaction.response.send_message('WHY?!?!?')
-        with open('log.txt', "a") as f:
-            f.write("\nSomeone has tried to restart the bot \n Command has been run at: " + time.ctime())
-            f.close()
+    await on_slash_command_error(interaction)
+
+    await interaction.response.send_message("Restarting bread bot...")
+    with open('log.txt', "a") as f:
+        f.write(f"\nBread bot has been restarted for the reason {reason} \n Command has been run at: " + time.ctime())
+        f.close()
+    os.system("python breadbot.py")
+    os.execl(python, python, * sys.argv)
+
+
+
+@client.tree.command(name = "breadattack", description="Funny bread attack gif")
+async def breadattack(interaction: discord.Interaction):
+    await interaction.response.send_message("https://cdn.discordapp.com/emojis/708895481886932992.gif?size=64")
+ 
+
 #
 #@client.tree.command()
 #async def breadMute(ctx, user='None', reason = 'None'):
