@@ -161,7 +161,7 @@ async def update_info(interaction: discord.Interaction):
 async def wetbread(interaction: discord.Interaction):
     await interaction.response.send_message("https://imgur.com/a/HqrvEEO")
     
-@client.tree.command(name = "restartbread", description="Restart the bread bot")
+@client.tree.command(name = "breadmanage", description="Manage the bread bot")
 @discord.app_commands.checks.has_role("tech support")
 
 async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
