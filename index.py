@@ -193,6 +193,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         with open('pid.txt', "r") as f:
             pid = f.read()
             f.close()
+        pid = int(pid)
         os.system(f"kill {pid}")
         os.system("nohup python index.py &")
         
