@@ -219,7 +219,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             f.close()
         if pid == '':
             console.log("No pid found")
-        os.system(f"kill {pid}")
+        os.kill(pid, 9)
         os.system("nohup python index.py &")
         os.system("echo $! > $HOME/bread-bot/pid.txt")
         
@@ -255,7 +255,7 @@ async def breadhelp(interaction: discord.Interaction):
     embedVar.add_field(name="Bugs", value="If you find a bug, please report it to tech support", inline=False)
     embedVar.add_field(name="Suggestions", value="If you have a suggestion, please contact tech support", inline=False)
     await interaction.response.send_message(embed=embedVar)
-@client.tree.command(name ="testupdatee", description="Test the update command")
+@client.tree.command(name ="testupdateee", description="Test the update command")
 async def testupdate(interaction: discord.Interaction):
     await interaction.response.send_message("This is a test update, please ignore this command")
 
