@@ -181,13 +181,12 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         for i in range(2):
             exit()
     elif type == "update":
-        await interaction.channel.send("Updating bread bot from github... this may take up to two minutes")
+        await interaction.response.send_message("Updating bread bot from github... this may take up to two minutes")
         channel = client.get_channel(1039251976682229824)
         await channel.send("**New update to the bread bot!**\nRun the command /updateinfo to see the new command!")
         with open('log.txt', "a") as f:
             f.write(f"\nBread bot has been updated for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
-        os.system("git stash")
         os.system("git pull https://github.com/WhineyMonkey10/Bread-bot")
         os.system("nohup python index.py &")
         
