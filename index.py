@@ -256,7 +256,10 @@ async def breadhelp(interaction: discord.Interaction):
     embedVar.add_field(name="Bugs", value="If you find a bug, please report it to tech support", inline=False)
     embedVar.add_field(name="Suggestions", value="If you have a suggestion, please contact tech support", inline=False)
     await interaction.response.send_message(embed=embedVar)
-
+@client.tree.command(name ="testupdate", description="Test the update command")
+async def testupdate(interaction: discord.Interaction):
+    await interaction.response.send_message("This is a test update, please ignore this command")
+    
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
 #async def deletemessage(interaction: discord.Interaction, messageid: ):
