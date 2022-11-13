@@ -224,6 +224,7 @@ async def breadattack(interaction: discord.Interaction):
 #    with open('log.txt', "a") as f:
 #        f.write(f"\n{member} has been kicked for the reason {reason} \n Command has been run at: " + time.ctime())
 #        f.close()
+#
 
 #
 #@client.tree.command()
