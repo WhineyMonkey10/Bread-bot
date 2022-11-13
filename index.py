@@ -219,6 +219,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             f.close()
         if pid == '':
             console.log("No pid found")
+        print(pid)
         os.kill(int(pid), 9)
         os.system("nohup python index.py &")
         os.system("echo $! > $HOME/bread-bot/pid.txt")
