@@ -220,10 +220,12 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         if pid == '':
             console.log("No pid found")
         os.system("echo $! > $HOME/bread-bot/pid.txt")
-        pid = os.system("echo $! > $HOME/bread-bot/pid.txt")
-        os.kill(int(pid), 9)
+        pid_beforedelete = os.system("echo $! > $HOME/bread-bot/pid.txt")
         os.system("nohup python index.py &")
         os.system("echo $! > $HOME/bread-bot/pid.txt")
+        os.kill(int(pid_beforedelete), 9)
+        
+        
         
 
     elif type == "debug":
