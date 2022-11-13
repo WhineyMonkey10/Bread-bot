@@ -181,8 +181,15 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         with open('log.txt', "a") as f:
             f.write(f"\nBread bot has been restarted for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
-        os.system("python breadbot.py")
-        os.execl(python, python, * sys.argv)
+        with open('pid.txt', "r") as f:
+            pid = f.read()
+            f.close()
+        pid = int(pid)
+        if pid == '':
+            console.log("No pid found")
+        os.system(f"kill {pid}")
+        os.system("nohup python index.py &")
+        os.system("echo $! > $HOME/bread-bot/pid.txt")
     elif type == "shutdown":
         
         await interaction.response.send_message("Shutting down bread bot...")
@@ -190,7 +197,15 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             f.write(f"\nBread bot has been shutdown for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
         for i in range(2):
-            exit()
+            with open('pid.txt', "r") as f:
+                pid = f.read()
+                f.close()
+            pid = int(pid)
+            if pid == '':
+                console.log("No pid found")
+            os.system(f"kill {pid}")
+            os.system("nohup python index.py &")
+            os.system("echo $! > $HOME/bread-bot/pid.txt")
     elif type == "update":
         await interaction.response.send_message("Updating bread bot from github... this may take up to two minutes")
         channel = client.get_channel(1039251976682229824)
