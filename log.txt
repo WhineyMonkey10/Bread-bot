@@ -1019,3 +1019,11 @@ Starting bot...
  Started sucessfuly at: Sun Nov 13 10:35:56 2022
  Someone has been bullied 
  Command has been run at: Sun Nov 13 10:36:20 2022
+Starting bot... 
+ Started sucessfuly at: Sun Nov 13 15:52:06 2022
+Bread bot has been updated for the reason test 
+ Command has been run at: Sun Nov 13 15:52:41 2022
+Starting bot... 
+ Started sucessfuly at: Sun Nov 13 15:53:16 2022
+Bread bot has been updated for the reason test 
+ Command has been run at: Sun Nov 13 15:53:25 2022
