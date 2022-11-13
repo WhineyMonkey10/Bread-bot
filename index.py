@@ -181,7 +181,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         for i in range(2):
             exit()
     elif type == "update":
-        await interaction.response.send_message("Updating bread bot from github...")
+        await interaction.response.send_message("Updating bread bot from github... this may take up to two minutes")
         channel = client.get_channel(1039251976682229824)
         await channel.send("**New update to the bread bot!**\nRun the command /updateinfo to see the new command!")
         with open('log.txt', "a") as f:
@@ -202,7 +202,6 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             f.close()
         os.system("python breadbot.py")
         os.execl(python, python, * sys.argv)
-
     else:
         await interaction.response.send_message("Invalid type! Valid types are: restart, shutdown, update, debug")
 
