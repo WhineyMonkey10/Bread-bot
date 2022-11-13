@@ -591,7 +591,7 @@ Starting bot...
  Command has been run at: Fri Nov 11 17:24:55 2022
  Someone has been bullied 
  Command has been run at: Fri Nov 11 17:24:56 2022
- Someone has been bullied 
+ Someone has been bullied FINAL ONE PLEASEEEEEEEEEEE
  Command has been run at: Fri Nov 11 17:24:57 2022
  Someone has been bullied 
  Command has been run at: Fri Nov 11 17:24:58 2022
