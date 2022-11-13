@@ -154,7 +154,7 @@ async def newupdate(interaction : discord.Interaction):
 
 @client.tree.command(name="updateinfo", description="Info about the new update")
 async def update_info(interaction: discord.Interaction):
-    await interaction.response.send_message("**New update:** Fixed the new bread bot update command")
+    await interaction.response.send_message("**New update:** Finally fixed and completed the breadmanage command")
 
 
 @client.tree.command(name = "wetbread", description="Wet bread")
