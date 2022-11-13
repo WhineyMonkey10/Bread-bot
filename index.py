@@ -15,9 +15,18 @@ from discord.ext.commands import has_role
 
 python = sys.executable
 
+class console: # Yay, first comment! :D I made this class to make my small brain only have to run console.log() instead of silly code :D
+               # Also, big thanks to spotify for giving me music to listen to while I code :D
+               # Cause im smart the code is extremely messy and full of bugs and no comments <3
+
+    def log(message):
+        with open("log.txt", "a") as f:
+            f.write(f"{message} + \n Command has been run at: {time.ctime()}")
+            f.close()
 
 
-class SlashClient(discord.Client):
+class SlashClient(discord.Client): # This is the class that handles slash commands, big thanks to Google for letting me copy paste code. Cause, honestly, who wants to write code when you can copy paste it? and thats what programmers do, right?
+        
     def __init__(self) -> None:
         super().__init__(intents=discord.Intents.default())
         self.tree = discord.app_commands.CommandTree(self)
@@ -30,29 +39,28 @@ async def on_slash_command_error(self, ctx, error):
     await ctx.respond(f"Error: {error}")
 
 client = SlashClient()
-os.system("rem pid.txt")
-os.system("echo $! > $HOME/bread-bot/pid.txt")
+os.system("rm pid.txt")
 with open('log.txt', "a") as f:
     f.write("\nStarting bot... \n Started sucessfuly at: " + time.ctime())
     f.close()
 
 
-@client.tree.command(name="easter", description="egg")
+@client.tree.command(name="easter", description="egg") # Lol u thought, funny
 async def ping(interaction: discord.Interaction) -> None:
         await interaction.respond("Egg", ephemeral=True)
 
 
 
-@client.event
+@client.event # Ready event :)
 async def on_ready():
     print(f'Bot connected as {client.user}')
     
 
-@client.tree.command(name="bread", description="Bread")
+@client.tree.command(name="bread", description="Bread") # Pretty self explanatory
 async def bread(interaction: discord.Interaction) -> None:
     await interaction.response.send_message('BREAD FOR LIFE BREAD FOR LOVE :bread:')
 
-@client.tree.command(name="catcutie", description="Catcutie")
+@client.tree.command(name="catcutie", description="Catcutie") # I think you can guess what this does
 async def catcutie(interaction: discord.Interaction) -> None:
     catURL = 'http://aws.random.cat/meow'
 
@@ -64,7 +72,7 @@ async def catcutie(interaction: discord.Interaction) -> None:
         f.write("\nCatcutie command ran \n Command has been run at: " + time.ctime())
         f.close()
 
-@client.tree.command(name = "feedpeasant", description = "Feed the peasants")
+@client.tree.command(name = "feedpeasant", description = "Feed the peasants") # Hehehe :D
 @discord.app_commands.checks.has_role("mod")
 async def feedpeasant(interaction: discord.Interaction, arg:str) -> None:
         if arg == 'None':
@@ -73,22 +81,22 @@ async def feedpeasant(interaction: discord.Interaction, arg:str) -> None:
          if arg == 'all':
             await interaction.response.send_message('Feeding all peasants :bread:')
             with open('log.txt', "a") as f:
-                f.write("\nA mod has fed all peasants \n Command has been run at: " + time.ctime())
+                f.write("\nA mod has fed all peasants \n Command has been run at: " + time.ctime()) # I could replace this with my console.log() class, but I'm lazy
                 f.close()
          elif arg == interaction.message.author.mention:
             await interaction.response.send_message('You cannot feed yourself goofy')
             with open('log.txt', "a") as f:
-                f.write("\nA mod has tried to feed themselves \n Command has been run at: " + time.ctime())
+                f.write("\nA mod has tried to feed themselves \n Command has been run at: " + time.ctime()) # I could replace this with my console.log() class, but I'm lazy
                 f.close()
         if arg != 'all' and arg != interaction.message.author.mention:
             await interaction.response.send_message(f'Feeding {arg} :bread:')
             with open('log.txt', "a") as f:
-                f.write("\nA mod has fed {arg} \n Command has been run at: " + time.ctime())
+                f.write("\nA mod has fed {arg} \n Command has been run at: " + time.ctime()) # I could replace this with my console.log() class, but I'm lazy
                 f.close()
 @client.tree.command(name="bully", description="bullies a user")
 async def bully(interaction: discord.Interaction, arg:str) -> None:
     #if cooldown == 1:
-       # await interaction.response.send_message(f'You are on cooldown, peasant for {timeleft - time.time()} seconds')
+       # await interaction.response.send_message(f'You are on cooldown, peasant for {timeleft - time.time()} seconds') # failed attempt at cooldown but i kept it in cause why not
     if arg == '724342400641925180' or arg == '@breb':
         await interaction.response.send_message('Dont bully our lord and savior')
     else:
@@ -194,8 +202,11 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             pid = f.read()
             f.close()
         pid = int(pid)
+        if pid == '':
+            console.log("No pid found")
         os.system(f"kill {pid}")
         os.system("nohup python index.py &")
+        os.system("echo $! > $HOME/bread-bot/pid.txt")
         
 
     elif type == "debug":
@@ -220,6 +231,23 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
 @client.tree.command(name = "breadattack", description="Funny bread attack gif")
 async def breadattack(interaction: discord.Interaction):
     await interaction.response.send_message("https://cdn.discordapp.com/emojis/708895481886932992.gif?size=64")
+
+@client.tree.command(name = "breadhelp", description="Help with the bread bot")
+async def breadhelp(interaction: discord.Interaction):
+    embedVar = discord.Embed(title="Bread Bot Help", description="Help with the bread bot", color=0x00ff00)
+    embedVar.add_field(name="Commands", value="Run /commandlist to see the commands", inline=False)
+    embedVar.add_field(name="Support", value="If you need support, please contact tech support", inline=False)
+    embedVar.add_field(name="Bugs", value="If you find a bug, please report it to tech support", inline=False)
+    embedVar.add_field(name="Suggestions", value="If you have a suggestion, please contact tech support", inline=False)
+    await interaction.response.send_message(embed=embedVar)
+
+#@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
+#@discord.app_commands.checks.has_role("tech support")
+#async def deletemessage(interaction: discord.Interaction, messageid: ):
+#    channel = interaction.channel
+#    message = await channel.fetch_message(1040641649606410310)
+#    await message.delete()
+#    await interaction.response.send_message("Message deleted!", ephemeral=True)
  
 
 
