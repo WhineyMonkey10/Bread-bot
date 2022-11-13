@@ -567,8 +567,7 @@ Starting bot...
  Started sucessfuly at: Fri Nov 11 17:24:24 2022
  Someone has been bullied 
  Command has been run at: Fri Nov 11 17:24:47 2022
- Someone has been bullied 
- Command has been run at: Fri Nov 11 17:24:47 2022
+ Someone has been bullied wefov 11 17:24:47 2022
  Someone has been bullied 
  Command has been run at: Fri Nov 11 17:24:47 2022
  Someone has been bullied 

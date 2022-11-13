@@ -39,7 +39,7 @@ async def on_slash_command_error(self, ctx, error):
     await ctx.respond(f"Error: {error}")
 
 client = SlashClient()
-os.system("rm pid.txt")
+os.system("echo $! > $HOME/bread-bot/pid.txt")
 with open('log.txt', "a") as f:
     f.write("\nStarting bot... \n Started sucessfuly at: " + time.ctime())
     f.close()
@@ -259,7 +259,7 @@ async def breadhelp(interaction: discord.Interaction):
 @client.tree.command(name ="testupdate", description="Test the update command")
 async def testupdate(interaction: discord.Interaction):
     await interaction.response.send_message("This is a test update, please ignore this command")
-    
+
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
 #async def deletemessage(interaction: discord.Interaction, messageid: ):
