@@ -188,6 +188,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             f.write(f"\nBread bot has been updated for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
         os.system("git pull https://github.com/WhineyMonkey10/Bread-bot")
+        os.system("nohup python index.py &")
         os.execl(python, python, * sys.argv)
 
     elif type == "debug":
