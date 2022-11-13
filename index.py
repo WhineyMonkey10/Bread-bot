@@ -212,6 +212,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         with open('log.txt', "a") as f:
             f.write(f"\nBread bot has been updated for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
+        os.system("git stash")
         os.system("git pull https://github.com/WhineyMonkey10/Bread-bot")
         with open('pid.txt', "r") as f:
             pid = f.read()
