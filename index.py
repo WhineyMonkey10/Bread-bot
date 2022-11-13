@@ -30,7 +30,7 @@ async def on_slash_command_error(self, ctx, error):
     await ctx.respond(f"Error: {error}")
 
 client = SlashClient()
-os.system("del pid.txt")
+os.system("rem pid.txt")
 os.system("echo $! > $HOME/bread-bot/pid.txt")
 with open('log.txt', "a") as f:
     f.write("\nStarting bot... \n Started sucessfuly at: " + time.ctime())
