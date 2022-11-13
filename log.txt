@@ -1,4 +1,4 @@
-Starting bot a
+Starting bo
  Started sucessfuly at: Wed Nov  9 18:38:31 2022Starting bot... 
  Started sucessfuly at: Wed Nov  9 18:39:03 2022Starting bot... 
  Started sucessfuly at: Wed Nov  9 18:43:45 2022(Normal) commandlist 
@@ -996,4 +996,4 @@ Starting bot...
 996
 997
 998
-999
+999#
