@@ -305,7 +305,3 @@ from dotenv import load_dotenv
 load_dotenv()
 client.run(os.getenv('TOKEN'))
 
-while True:
-    if cooldown == 1:
-        time.sleep(300)
-        cooldown = 0
