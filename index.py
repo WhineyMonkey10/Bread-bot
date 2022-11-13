@@ -190,7 +190,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         os.system("git stash")
         os.system("git pull https://github.com/WhineyMonkey10/Bread-bot")
         os.system("nohup python index.py &")
-        os.execl(python, python, * sys.argv)
+        
 
     elif type == "debug":
         await interaction.response.send_message("Debugging bread bot... allow up to 5 minutes for the bot to try to locate the issue")
