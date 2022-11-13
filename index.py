@@ -216,14 +216,14 @@ async def breadattack(interaction: discord.Interaction):
  
 
 
-@client.tree.command(name = "kick", description="Kick a peasant")
-@discord.app_commands.checks.has_role("mod")
-async def kick(interaction: discord.Interaction, member: discord.Member, *, reason=None):
-    await member.kick(reason=reason)
-    await interaction.response.send_message(f"Kicked {member.mention}")
-    with open('log.txt', "a") as f:
-        f.write(f"\n{member} has been kicked for the reason {reason} \n Command has been run at: " + time.ctime())
-        f.close()
+#@client.tree.command(name = "kick", description="Kick a peasant")
+#@discord.app_commands.checks.has_role("mod")
+#async def kick(interaction: discord.Interaction, member: discord.Member, *, reason=None):
+#    await member.kick(reason=reason)
+#    await interaction.response.send_message(f"Kicked {member.mention}")
+#    with open('log.txt', "a") as f:
+#        f.write(f"\n{member} has been kicked for the reason {reason} \n Command has been run at: " + time.ctime())
+#        f.close()
 
 #
 #@client.tree.command()
