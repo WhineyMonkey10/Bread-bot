@@ -1,3 +1,4 @@
+echo "Script started at $(date)"
 if [ ps -p $(cat $HOME/bread-bot/pid.txt) ]; then
     echo "Bot is running"
     echo "Bot is running at $(date)" >> $HOME/bread-bot/restart.log
