@@ -224,7 +224,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
         os.system("sh startup.sh")
         os.kill(int(pid_beforedelete), 9)
 
-        
+        #
         
         
 
