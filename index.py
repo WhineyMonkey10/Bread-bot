@@ -158,7 +158,7 @@ async def dumpLogs(interaction: discord.Interaction):
 @client.tree.command(name="newupdate", description="New updates to the bread bot")
 @discord.app_commands.checks.has_role("tech support")
 async def newupdate(interaction : discord.Interaction):
-    channel = client.get_channel(1039251976682229824)
+    channel = client.get_channel(1041458944813580288)
     await channel.send("**New update to the bread bot!**\nRun the command /updateinfo to see the new command!")
     await interaction.response.send_message("Update has been sent to the update channel!", ephemeral=True)
 
