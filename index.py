@@ -17,7 +17,7 @@ python = sys.executable
 
 class console: # Yay, first comment! :D I made this class to make my small brain only have to run console.log() instead of silly code :D
                # Also, big thanks to spotify for giving me music to listen to while I code :D
-               # Cause im smart the code is extremely messy and full of bugs and no comments <3
+               # Cause im smart the code is extremely messy and full of bugs and no comments <3.
 
     def log(message):
         with open("log.txt", "a") as f:
