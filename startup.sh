@@ -1,4 +1,6 @@
 echo "Script started at $(date)"
+# Save the bash script's PID to a file
+echo $$ > $HOME/bread-bot/startuppid.txt
 
 while true; do
     if [ ps -p $(cat $HOME/bread-bot/pid.txt) ]; then
@@ -10,6 +12,7 @@ while true; do
         cd $HOME/bread-bot
         nohup python index.py &
         echo $! > $HOME/bread-bot/pid.txt
+
         echo "Bot restarted at $(date)" >> $HOME/bread-bot/restart.log
     fi
     sleep 1

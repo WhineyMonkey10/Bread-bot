@@ -12,6 +12,7 @@ from os import system
 import sys
 import os
 from discord.ext.commands import has_role
+import BeautifulSoup4
 
 python = sys.executable
 
@@ -244,7 +245,6 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
 
 
 
-
 @client.tree.command(name = "breadattack", description="Funny bread attack gif")
 async def breadattack(interaction: discord.Interaction):
     await interaction.response.send_message("https://cdn.discordapp.com/emojis/708895481886932992.gif?size=64")
@@ -260,6 +260,33 @@ async def breadhelp(interaction: discord.Interaction):
 @client.tree.command(name ="hellothere", description="Test the update command")
 async def testupdate(interaction: discord.Interaction):
     await interaction.response.send_message("This is a test update, please ignore this command")
+
+# Command to get the current FIFA World Cup 2022 scores
+@client.tree.command(name = "fifa", description="Get the current FIFA World Cup 2022 scores")
+async def fifa(interaction: discord.Interaction):
+    # Get the current FIFA World Cup 2022 scores
+    import requests
+    r = requests.get("https://worldcup.sfg.io/matches")
+    # Convert the text to a JSON object
+    data = r.json()
+    # Create a string to store the scores
+    scores = ""
+    # Loop through each match
+    for match in data:
+        # Add the match ino to the scores string
+        scores += f"{match['home_team']['country']} {match['home_team']['goals']} - {match['away_team']['gals']} {match['away_team']['country']}\n"
+    # Send the scores string
+    await interaction.response.send_message(scores)
+
+# Command to delete a certain message using the message ID
+@client.tree.command(name = "delete", description="Delete a message using the message ID")
+@discord.app_commands.checks.has_role("tech support")
+async def delete(interaction: discord.Interaction, message_id: int):
+    # Delete the message
+    await interaction.channel.delete_message(message_id)
+    # Send a confirmation message
+    await interaction.response.send_message(f"Deleted message {message_id}")
+    
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
