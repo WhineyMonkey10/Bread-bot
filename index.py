@@ -12,7 +12,6 @@ from os import system
 import sys
 import os
 from discord.ext.commands import has_role
-import BeautifulSoup4
 
 python = sys.executable
 
