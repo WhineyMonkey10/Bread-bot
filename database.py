@@ -43,5 +43,13 @@ class Database:
             return True
         else:
             return False
+    def robuser(victimUser_id, amount, user_id):
+        import random
+        if random.randint(1, 2) == 1:
+            collection.find_one_and_update({'user_id': victimUser_id}, {'$inc': {'currency': -amount}})
+            collection.find_one_and_update({'user_id': user_id}, {'$inc': {'currency': amount}})
+            return True
+        else:
+            return False
 
 Database.add_user(123456789)
