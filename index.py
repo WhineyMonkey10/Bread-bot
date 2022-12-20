@@ -12,6 +12,7 @@ from os import system
 import sys
 import os
 from discord.ext.commands import has_role
+from database import Database
 
 python = sys.executable
 
@@ -285,6 +286,11 @@ async def delete(interaction: discord.Interaction, message_id: int):
     # Send a confirmation message
     await interaction.response.send_message(f"Deleted message {message_id}")
     
+
+@client.tree.command(name = "balance", description="Get your bread bucks balance")
+async def balance(interaction: discord.Interaction):
+    user_id = interaction.user.id
+    await interaction.response.send_message(f"Your balance is {Database.get_balance(user_id)}")
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
