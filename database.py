@@ -14,7 +14,7 @@ class Database:
         self.db = db
         self.collection = collection
 
-    def get_balance(user_id, currency):
+    def get_balance(user_id):
         currency = collection.find_one({'user_id': user_id, 'currency': currency})
         currency.pop('_id')
         currency.pop('user_id')

@@ -299,6 +299,13 @@ async def robuser(interaction: discord.Interaction, user: discord.User, amount: 
     else:
         await interaction.response.send_message(f"You failed to rob {user.mention} of {amount} bread bucks! You sussy baka!")
     
+#TODO: @client.tree.command(name = "daily", description="Get your daily bread bucks")
+
+client.tree.command(name = "givebucks", description="Give bread bucks to a user, our lord and savior only")
+@discord.app_commands.checks.has_role("mod")
+async def givebucks(interaction: discord.Interaction, user: discord.User, amount: int):
+    Database.update_currency(user.id, amount)
+    await interaction.response.send_message(f"You gave {user.mention} {amount} bread bucks!")
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
