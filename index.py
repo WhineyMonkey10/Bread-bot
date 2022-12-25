@@ -282,7 +282,8 @@ async def delete(interaction: discord.Interaction, message_id: int):
 
 @client.tree.command(name = "balance", description="Get your bread bucks balance")
 async def balance(interaction: discord.Interaction):
-    await interaction.response.send_message(f"Your balance is {Database.get_balance(interaction.user.id)} bread bucks")
+    userid = interaction.user.id
+    await interaction.response.send_message(f"Your balance is {Database.get_balance(userid)} bread bucks {userid}")
 
 @client.tree.command(name = "pay", description="Pay someone bread bucks")
 async def pay(interaction: discord.Interaction, user: discord.User, amount: int):
@@ -301,7 +302,7 @@ async def robuser(interaction: discord.Interaction, user: discord.User, amount: 
 #TODO: @client.tree.command(name = "daily", description="Get your daily bread bucks")
 
 client.tree.command(name = "givebread", description="Give bread bucks to a user, our lord and savior only")
-@discord.app_commands.checks.has_role("mod")
+
 async def givebucks(interaction: discord.Interaction, user: discord.User, amount: int):
     Database.update_currency(user.id, amount)
     await interaction.response.send_message(f"You gave {user.mention} {amount} bread bucks!")
