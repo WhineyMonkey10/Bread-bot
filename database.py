@@ -15,13 +15,10 @@ class Database:
         self.collection = collection
 
     def get_balance(user_id):
-        currency = collection.find_one({'user_id': user_id})
-        #currency.pop('_id')
-        #currency.pop('user_id')
-        if currency == None:
-            return "You don't have any currency!"
-        else:
-            return currency
+        # Find the user in the database
+        user = collection.find_one({'user_id': user_id})
+        # Get only the currency value
+        return user['currency']
     
     def update_currency(user_id, amount, type):
         if type == 'add':
