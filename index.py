@@ -282,8 +282,7 @@ async def delete(interaction: discord.Interaction, message_id: int):
 
 @client.tree.command(name = "balance", description="Get your bread bucks balance")
 async def balance(interaction: discord.Interaction):
-    user_id = interaction.user.id
-    await interaction.response.send_message(f"Your balance is {Database.get_balance(user_id)}")
+    await interaction.response.send_message(f"Your balance is {Database.get_balance(interaction.user.id)} bread bucks")
 
 @client.tree.command(name = "pay", description="Pay someone bread bucks")
 async def pay(interaction: discord.Interaction, user: discord.User, amount: int):

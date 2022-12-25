@@ -16,8 +16,8 @@ class Database:
 
     def get_balance(user_id):
         currency = collection.find_one({'user_id': user_id})
-        currency.pop('_id')
-        currency.pop('user_id')
+        #currency.pop('_id')
+        #currency.pop('user_id')
         if currency == None:
             return "You don't have any currency!"
         else:
