@@ -214,15 +214,8 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             f.write(f"\nBread bot has been updated for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
         os.system("git pull https://github.com/WhineyMonkey10/Bread-bot")
-        with open('pid.txt', "r") as f:
-            pid = f.read()
-            f.close()
-        if pid == '':
-            console.log("No pid found")
-        os.system("echo $! > $HOME/bread-bot/pid.txt")
-        pid_beforedelete = os.system("echo $! > $HOME/bread-bot/pid.txt")
-
-        os.kill(int(pid_beforedelete), 9)
+        # Restzart the bot without actually killing the Python process
+        os.execl(sys.executable, sys.executable, *sys.argv)
 
         
 
@@ -289,8 +282,26 @@ async def delete(interaction: discord.Interaction, message_id: int):
 
 @client.tree.command(name = "balance", description="Get your bread bucks balance")
 async def balance(interaction: discord.Interaction):
+    Database.checkIfUserExists(interaction.user.id)
     user_id = interaction.user.id
     await interaction.response.send_message(f"Your balance is {Database.get_balance(user_id)}")
+
+@client.tree.command(name = "pay", description="Pay someone bread bucks")
+async def pay(interaction: discord.Interaction, user: discord.User, amount: int):
+    Database.checkIfUserExists(interaction.user.id)
+    await interaction.response.send_message(f"You paid {user.mention} {amount} bread bucks")
+
+#TODO : @client.tree.command(name = "leaderboard", description="Get the bread bucks leaderboard")
+
+@client.tree.command(name = "rob", description="Rob a user's bread bucks")
+async def robuser(interaction: discord.Interaction, user: discord.User, amount: int):
+    Database.checkIfUserExists(interaction.user.id)
+    response = Database.rob(user.id, amount, interaction.user.id)
+    if response == True:
+        await interaction.response.send_message(f"You robbed {user.mention} of {amount} bread bucks!")
+    else:
+        await interaction.response.send_message(f"You failed to rob {user.mention} of {amount} bread bucks! You sussy baka!")
+    
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
