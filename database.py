@@ -35,14 +35,11 @@ class Database:
     def add_user(user_id):
         collection.insert_one({'user_id:': user_id, 'currency': 10000})
         return True
-    def rob(user_id, amount):
-        collection.find_one_and_update({'user_id': user_id}, {'$inc': {'currency': -amount}})
-        return True
     def checkIfUserExists(user_id):
         if collection.find_one({'user_id':user_id}):
             return True
         else:
-            return False
+            Database.add_user(user_id)
     def robuser(victimUser_id, amount, user_id):
         import random
         if random.randint(1, 2) == 1:
@@ -51,5 +48,9 @@ class Database:
             return True
         else:
             return False
+    def pay(user_id, amount, victimUser_id):
+        collection.find_one_and_update({'user_id:': user_id}, {'$inc': {'currency': -amount}})
+        collection.find_one_and_update({'user_id:': victimUser_id}, {'$inc': {'currency': amount}})
+        return True
 
 Database.add_user(123456789)
