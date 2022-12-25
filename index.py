@@ -282,20 +282,17 @@ async def delete(interaction: discord.Interaction, message_id: int):
 
 @client.tree.command(name = "balance", description="Get your bread bucks balance")
 async def balance(interaction: discord.Interaction):
-    Database.checkIfUserExists(interaction.user.id)
     user_id = interaction.user.id
     await interaction.response.send_message(f"Your balance is {Database.get_balance(user_id)}")
 
 @client.tree.command(name = "pay", description="Pay someone bread bucks")
 async def pay(interaction: discord.Interaction, user: discord.User, amount: int):
-    Database.checkIfUserExists(interaction.user.id)
     await interaction.response.send_message(f"You paid {user.mention} {amount} bread bucks")
 
 #TODO : @client.tree.command(name = "leaderboard", description="Get the bread bucks leaderboard")
 
 @client.tree.command(name = "rob", description="Rob a user's bread bucks")
 async def robuser(interaction: discord.Interaction, user: discord.User, amount: int):
-    Database.checkIfUserExists(interaction.user.id)
     response = Database.robuser(user.id, amount, interaction.user.id)
     if response == True:
         await interaction.response.send_message(f"You robbed {user.mention} of {amount} bread bucks!")
