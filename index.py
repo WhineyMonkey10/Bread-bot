@@ -300,7 +300,7 @@ async def robuser(interaction: discord.Interaction, user: discord.User, amount: 
     
 #TODO: @client.tree.command(name = "daily", description="Get your daily bread bucks")
 
-client.tree.command(name = "givebucks", description="Give bread bucks to a user, our lord and savior only")
+client.tree.command(name = "givebread", description="Give bread bucks to a user, our lord and savior only")
 @discord.app_commands.checks.has_role("mod")
 async def givebucks(interaction: discord.Interaction, user: discord.User, amount: int):
     Database.update_currency(user.id, amount)

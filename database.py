@@ -18,7 +18,7 @@ class Database:
         # Find the user in the database
         user = collection.find_one({'user_id': user_id})
         # Get only the currency value
-        return user['currency']
+        return user
     
     def update_currency(user_id, amount, type):
         if type == 'add':
@@ -46,3 +46,5 @@ class Database:
         collection.find_one_and_update({'user_id:': user_id}, {'$inc': {'currency': -amount}})
         collection.find_one_and_update({'user_id:': victimUser_id}, {'$inc': {'currency': amount}})
         return True
+    
+
