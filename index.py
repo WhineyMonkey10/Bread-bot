@@ -296,7 +296,7 @@ async def pay(interaction: discord.Interaction, user: discord.User, amount: int)
 @client.tree.command(name = "rob", description="Rob a user's bread bucks")
 async def robuser(interaction: discord.Interaction, user: discord.User, amount: int):
     Database.checkIfUserExists(interaction.user.id)
-    response = Database.rob(user.id, amount, interaction.user.id)
+    response = Database.robuser(user.id, amount, interaction.user.id)
     if response == True:
         await interaction.response.send_message(f"You robbed {user.mention} of {amount} bread bucks!")
     else:
