@@ -16,8 +16,7 @@ class Database:
         if bal == None:
             return "User does not exist, please use the command `/start` to get started!"
         elif bal != None:
-            user_id = f"<@{user_id}>"
-            return f"{user_id} has {bal['currency']} bread bucks!"
+            return bal['currency']
     def update_currency(user_id, currency):
         if Database.checkifuser(user_id):
             collection.update_one({"user_id": user_id}, {"$set": {"currency": currency}})
@@ -81,8 +80,7 @@ class Database:
                     elif chance > 25:
                         Database.add_currency(user_id, amount)
                         Database.remove_currency(target_id, amount)
-                        str(target_id)
-                        target_id = "<@" + target_id + ">"
+                        target_id = f"<@{target_id}>"
                         return f"You successfully robbed {target_id} and got {amount} bread bucks!"
     def pay(user_id, target_id, amount):
         if Database.checkifuser(user_id) == False:
@@ -93,11 +91,12 @@ class Database:
                 return "The target user does not have an account!"
             elif Database.checkifuser(target_id):
                 # Check if the user has enough bread bucks
+                
                 if Database.get_currency(user_id) < amount:
                     return "You do not have enough bread bucks!"
                 elif Database.get_currency(user_id) >= amount:
                     Database.remove_currency(user_id, amount)
                     Database.add_currency(target_id, amount)
                     str(target_id)
-                    target_id = "<@" + target_id + ">"
+                    target_id = f"<@{target_id}>"
                     return f"You paid {target_id} {amount} bread bucks!"
