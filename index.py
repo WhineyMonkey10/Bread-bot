@@ -374,20 +374,16 @@ async def shop(interaction: discord.Interaction):
 
     # Create the callback
     @view.on.button_click
-    async def on_click(interaction: discord.Interaction):
-        if interaction.user == interaction.message.author:
-            if interaction.component.custom_id == "swag_cap":
-                await interaction.response.send_message(Database.buy_item(interaction.user.id, "swag_cap"))
-            if interaction.component.custom_id == "bread":
-                await interaction.response.send_message(Database.buy_item(interaction.user.id, "bread"))
-            if interaction.component.custom_id == "nerf_gun":
-                await interaction.response.send_message(Database.buy_item(interaction.user.id, "nerf_gun"))
-            if interaction.component.custom_id == "actual_gun":
-                await interaction.response.send_message(Database.buy_item(interaction.user.id, "actual_gun"))
-        else:
-            await interaction.response.send_message("You did not request this shop! Please request your own.", ephemeral=True)
-    
-    
+    async def handle_button_click(button: discord.ui.Button, interaction: discord.Interaction):
+        if button.custom_id == "swag_cap":
+            await interaction.response.send_message(Database.buy(interaction.user.id, "swag_cap"))
+        elif button.custom_id == "bread":
+            await interaction.response.send_message(Database.buy(interaction.user.id, "bread"))
+        elif button.custom_id == "nerf_gun":
+            await interaction.response.send_message(Database.buy(interaction.user.id, "nerf_gun"))
+        elif button.custom_id == "actual_gun":
+            await interaction.response.send_message(Database.buy(interaction.user.id, "actual_gun"))
+        
     # Send the embed
     await interaction.response.send_message(embed=embed, view=view)
     
