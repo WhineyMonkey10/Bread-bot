@@ -64,13 +64,31 @@ class Database:
         elif user != None:
             return f"{user['user_id']}: {user['currency']}"
     def rob(user_id, target_id, amount):
-        import random
-        chance = random.randint(1, 100)
-        if chance <= 25:
-            Database.remove_currency(user_id, amount)
-            Database.add_currency(target_id, amount)
-            return f"You tried to rob {target_id} but failed and lost {amount} bread bucks!"
-        elif chance > 25:
-            Database.add_currency(user_id, amount)
-            Database.remove_currency(target_id, amount)
-            return f"You successfully robbed {target_id} and got {amount} bread bucks!"
+        if Database.checkifuser(user_id) == False:
+            return "You do not have an account! Please use the command `/start` to get started!"
+        elif Database.checkifuser(user_id):
+            import random
+            chance = random.randint(1, 100)
+            if chance <= 25:
+                Database.remove_currency(user_id, amount)
+                Database.add_currency(target_id, amount)
+                return f"You tried to rob {target_id} but failed and lost {amount} bread bucks!"
+            elif chance > 25:
+                Database.add_currency(user_id, amount)
+                Database.remove_currency(target_id, amount)
+                return f"You successfully robbed {target_id} and got {amount} bread bucks!"
+    def pay(user_id, target_id, amount):
+        if Database.checkifuser(user_id) == False:
+            return "You do not have an account! Please use the command `/start` to get started!"
+        elif Database.checkifuser(user_id):
+            # Check if the target user exists
+            if Database.checkifuser(target_id) == False:
+                return "The target user does not have an account!"
+            elif Database.checkifuser(target_id):
+                # Check if the user has enough bread bucks
+                if Database.get_currency(user_id) < amount:
+                    return "You do not have enough bread bucks!"
+                elif Database.get_currency(user_id) >= amount:
+                    Database.remove_currency(user_id, amount)
+                    Database.add_currency(target_id, amount)
+                    return f"You paid {target_id} {amount} bread bucks!"
