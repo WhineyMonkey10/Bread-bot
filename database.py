@@ -69,6 +69,9 @@ class Database:
                 # Check if the user has enough bread bucks
                 if Database.get_currency(user_id) < amount:
                     return "You do not have enough bread bucks!"
+                # Check if the target user has enough bread bucks
+                if Database.get_currency(target_id) < amount:
+                    return "The target user does not have enough bread bucks!"
                 elif Database.get_currency(user_id) >= amount:
                     import random
                     chance = random.randint(1, 100)
