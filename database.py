@@ -16,7 +16,8 @@ class Database:
         if bal == None:
             return "User does not exist, please use the command `/start` to get started!"
         elif bal != None:
-            return bal['currency']
+            user_id = f"<@{user_id}>"
+            return f"{user_id} has {bal['currency']} bread bucks!"
     def update_currency(user_id, currency):
         if Database.checkifuser(user_id):
             collection.update_one({"user_id": user_id}, {"$set": {"currency": currency}})
@@ -55,7 +56,8 @@ class Database:
     def get_leaderboard():
         # Get the User ID and Currency of all users and find the top 10 richest users
         top10 = list(collection.find({}, {"user_id": 1, "currency": 1}).sort("currency", -1).limit(10))
-        top10 = [f"{user['user_id']}: {user['currency']}" for user in top10]
+        # Make the user ID a mention and add the currency to the end
+        top10 = [f"<@{user['user_id']}>: {user['currency']}" for user in top10]
         return ''.join(top10)
     def rob(user_id, target_id, amount):
         if Database.checkifuser(user_id) == False:
@@ -73,10 +75,12 @@ class Database:
                     if chance <= 25:
                         Database.remove_currency(user_id, amount)
                         Database.add_currency(target_id, amount)
+                        target_id = f"<@{target_id}>"
                         return f"You tried to rob {target_id} but failed and lost {amount} bread bucks!"
                     elif chance > 25:
                         Database.add_currency(user_id, amount)
                         Database.remove_currency(target_id, amount)
+                        target_id = f"<@{target_id}>"
                         return f"You successfully robbed {target_id} and got {amount} bread bucks!"
     def pay(user_id, target_id, amount):
         if Database.checkifuser(user_id) == False:
@@ -92,4 +96,5 @@ class Database:
                 elif Database.get_currency(user_id) >= amount:
                     Database.remove_currency(user_id, amount)
                     Database.add_currency(target_id, amount)
+                    target_id = f"<@{target_id}>"
                     return f"You paid {target_id} {amount} bread bucks!"
