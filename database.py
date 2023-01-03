@@ -106,7 +106,7 @@ class Database:
         elif Database.checkifuser(user_id):
             # Check if the user is on cooldown, if they are, return a message saying they are on cooldown, if they are not, let them work. Check if they are on cooldown by checking the lastest instance of their user ID in the work cooldown file and compare its time to the current time. If the time is less than 5 minutes, return a message saying they are on cooldown, if it is more than 5 minutes, let them work.
             f = open("workcooldowns.txt", "r")
-            if f.read().find(user_id) == -1:
+            if f.read().find(user_id):
                 if datetime.datetime.now() - datetime.timedelta(minutes=5) > datetime.datetime.now():
                     return "You are on cooldown!"
                 else:
