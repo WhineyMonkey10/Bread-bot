@@ -283,29 +283,28 @@ async def delete(interaction: discord.Interaction, message_id: int):
 @client.tree.command(name = "balance", description="Get your bread bucks balance")
 async def balance(interaction: discord.Interaction):
     userid = interaction.user.id
-    await interaction.response.send_message(f"Your balance is {Database.get_balance(userid)} bread bucks {userid}")
+    await interaction.response.send_message(f"Your balance is {Database.get_currency(userid)} bread bucks!")
 
 @client.tree.command(name = "pay", description="Pay someone bread bucks")
 async def pay(interaction: discord.Interaction, user: discord.User, amount: int):
-    await interaction.response.send_message(f"You paid {user.mention} {amount} bread bucks")
+    Database.remove_currency(interaction.user.id, amount)
+    Database.add_currency(user.id, amount)
+    await interaction.response.send_message(f"You paid {user.mention} {amount} bread bucks!")
 
 #TODO : @client.tree.command(name = "leaderboard", description="Get the bread bucks leaderboard")
 
 @client.tree.command(name = "rob", description="Rob a user's bread bucks")
 async def robuser(interaction: discord.Interaction, user: discord.User, amount: int):
-    response = Database.robuser(user.id, amount, interaction.user.id)
-    if response == True:
-        await interaction.response.send_message(f"You robbed {user.mention} of {amount} bread bucks!")
-    else:
-        await interaction.response.send_message(f"You failed to rob {user.mention} of {amount} bread bucks! You sussy baka!")
+    await interaction.response.send_message(Database.rob_user(interaction.user.id, user.id, amount))
     
 #TODO: @client.tree.command(name = "daily", description="Get your daily bread bucks")
 
-client.tree.command(name = "givebread", description="Give bread bucks to a user, our lord and savior only")
+#@client.tree.command(name = "work", description="Work to get bread bucks")
 
-async def givebucks(interaction: discord.Interaction, user: discord.User, amount: int):
-    Database.update_currency(user.id, amount)
-    await interaction.response.send_message(f"You gave {user.mention} {amount} bread bucks!")
+@client.tree.command(name = "start", description="Begin your bread bucks journey!")
+async def start(interaction: discord.Interaction):
+    
+    await interaction.response.send_message(Database.start(interaction.user.id))
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
