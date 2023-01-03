@@ -329,7 +329,7 @@ async def developercurrency(interaction: discord.Interaction, user: discord.User
         
 @client.tree.command(name = "shop", description="A list of items you can buy using bread bucks")
 @discord.app_commands.checks.has_role("tech support")
-async def shop(interaction: discord.Interaction):
+async def shop(interaction: discord.Interaction): 
     # Create an embed with the items swag cap, bread, nerf gun, actual gun all with buttons and prices. When the user clicks on the button, it will add the item to their inventory and remove the bread bucks from their balance
     embed = discord.Embed(
         title = "Shop",
