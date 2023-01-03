@@ -373,16 +373,9 @@ async def shop(interaction: discord.Interaction):
     view.add_item(actual_gun)
 
     # Create the callback
-    @view.on.button_click
-    async def handle_button_click(button: discord.ui.Button, interaction: discord.Interaction):
-        if button.custom_id == "swag_cap":
-            await interaction.response.send_message(Database.buy(interaction.user.id, "swag_cap"))
-        elif button.custom_id == "bread":
-            await interaction.response.send_message(Database.buy(interaction.user.id, "bread"))
-        elif button.custom_id == "nerf_gun":
-            await interaction.response.send_message(Database.buy(interaction.user.id, "nerf_gun"))
-        elif button.custom_id == "actual_gun":
-            await interaction.response.send_message(Database.buy(interaction.user.id, "actual_gun"))
+    async def callback(interaction: discord.Interaction):
+        if interaction.data["custom_id"] == "swag_cap":
+            await interaction.response.send_message(Database.buy(interaction.user.id, "swag_cap", 3539))
         
     # Send the embed
     await interaction.response.send_message(embed=embed, view=view)
