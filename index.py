@@ -372,15 +372,14 @@ async def shop(interaction: discord.Interaction):
     view.add_item(nerf_gun)
     view.add_item(actual_gun)
 
-    # Make the buttons do something
-    if swag_cap.clicked:
-        await interaction.response.send_message(Database.shop.purchaseItems("swag cap"))
-    if bread.clicked:
-        await interaction.response.send_message(Database.shop.purchaseItems("bread"))
-    if nerf_gun.clicked:
-        await interaction.response.send_message(Database.shop.purchaseItems("nerf gun"))
-    if actual_gun.clicked:
-        await interaction.response.send_message(Database.shop.purchaseItems("actual gun"))
+    # Create the button click event
+    
+    discord.ui.button(swag_cap).click(Database.shop.purchaseItems("swag cap"))
+    discord.ui.button(bread).click(Database.shop.purchaseItems("bread"))
+    discord.ui.button(nerf_gun).click(Database.shop.purchaseItems("nerf gun"))
+    discord.ui.button(actual_gun).click(Database.shop.purchaseItems("actual gun"))
+    discord.ui.button(swag_cap).click(Database.shop.purchaseItems("swag cap"))
+    
     
     # Send the embed
     await interaction.response.send_message(embed=embed, view=view)
