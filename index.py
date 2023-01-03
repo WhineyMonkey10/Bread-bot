@@ -312,7 +312,6 @@ async def echo(interaction: discord.Interaction, message: str):
     await interaction.response.send_message(message)
     
 @client.tree.command(name = "work", description="Work to earn bread bucks! There are odds of getting 5k+ bread bucks or 0 bread bucks")	
-@discord.app_commands.checks.has_role("tech support")
 async def work(interaction: discord.Interaction):
     await interaction.response.send_message(Database.work(interaction.user.id))
 
@@ -325,6 +324,56 @@ async def developercurrency(interaction: discord.Interaction, user: discord.User
         await interaction.response.send_message(Database.remove_currency(user.id, amount))
     if type == "set":
         await interaction.response.send_message(Database.update_currency(user.id, amount))
+    if type == "start_user":
+        await interaction.response.send_message(Database.start(user.id))
+        
+@client.tree.command(name = "shop", description="A list of items you can buy using bread bucks")
+@discord.app_commands.checks.has_role("tech support")
+async def shop(interaction: discord.Interaction, user: discord.User, type: str):
+    # Create an embed with the items swag cap, bread, nerf gun, actual gun all with buttons and prices. When the user clicks on the button, it will add the item to their inventory and remove the bread bucks from their balance
+    embed = discord.Embed(
+        title = "Shop",
+        description = "Click on the buttons below to buy an item",
+        colour = discord.Colour.blue()
+    )
+    embed.set_author(name = "Bread Bucks Bot")
+    embed.set_thumbnail(url = "https://i.imgur.com/7v6Ux0W.png")
+    embed.add_field(name = "Swag Cap", value = "Price: 100 bread bucks", inline = False)
+    embed.add_field(name = "Bread", value = "Price: 25 bread bucks", inline = False)
+    embed.add_field(name = "Nerf Gun", value = "Price: 500 bread bucks", inline = False)
+    embed.add_field(name = "Actual Gun", value = "Price: 1000 bread bucks", inline = False)
+    embed.set_footer(text = "This is a work in progress")
+    # Create the buttons
+    swag_cap = discord.ui.Button(
+        style = discord.ButtonStyle.primary,
+        label = "Swag Cap",
+        custom_id = "swag_cap"
+    )
+    bread = discord.ui.Button(
+        style = discord.ButtonStyle.primary,
+        label = "Bread",
+        custom_id = "bread"
+    )
+    nerf_gun = discord.ui.Button(
+        style = discord.ButtonStyle.primary,
+        label = "Nerf Gun",
+        custom_id = "nerf_gun"
+    )
+    actual_gun = discord.ui.Button(
+        style = discord.ButtonStyle.primary,
+        label = "Actual Gun",
+        custom_id = "actual_gun"
+    )
+    # Create the view
+    view = discord.ui.View()
+    # Add the buttons to the view
+    view.add_item(swag_cap)
+    view.add_item(bread)
+    view.add_item(nerf_gun)
+    view.add_item(actual_gun)
+    # Send the embed
+    await interaction.response.send_message(embed=embed, view=view)
+    
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
