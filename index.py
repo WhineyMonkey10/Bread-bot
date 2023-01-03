@@ -311,6 +311,11 @@ async def leaderboard(interaction: discord.Interaction):
 async def echo(interaction: discord.Interaction, message: str):
     await interaction.response.send_message(message)
     
+@client.tree.command(name = "work", description="Work to earn bread bucks! There are odds of getting 5k+ bread bucks or 0 bread bucks")	
+@discord.app_commands.checks.has_role("tech support")
+async def work(interaction: discord.Interaction):
+    await interaction.response.send_message(Database.work(interaction.user.id))
+
 
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
