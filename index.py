@@ -281,9 +281,9 @@ async def delete(interaction: discord.Interaction, message_id: int):
     
 
 @client.tree.command(name = "balance", description="Get your bread bucks balance")
-async def balance(interaction: discord.Interaction):
-    userid = interaction.user.id
-    await interaction.response.send_message(f"Your balance is {Database.get_currency(userid)}")
+async def balance(interaction: discord.Interaction, user: discord.User):
+    userid = user.id
+    await interaction.response.send_message(f"The requested user's balance is {Database.get_currency(userid)}")
 
 @client.tree.command(name = "pay", description="Pay someone bread bucks")
 async def pay(interaction: discord.Interaction, user: discord.User, amount: int):
@@ -302,6 +302,11 @@ async def robuser(interaction: discord.Interaction, user: discord.User, amount: 
 @client.tree.command(name = "start", description="Begin your bread bucks journey!")
 async def start(interaction: discord.Interaction):
     await interaction.response.send_message(Database.start(interaction.user.id))
+
+@client.tree.command(name = "leaderboard", description="Get the top 10 richest users")
+async def leaderboard(interaction: discord.Interaction):
+    await interaction.response.send_message(Database.leaderboard())
+
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")

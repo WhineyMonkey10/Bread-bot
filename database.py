@@ -57,12 +57,6 @@ class Database:
         top10 = list(collection.find({}, {"user_id": 1, "currency": 1}).sort("currency", -1).limit(10))
         top10 = [f"{user['user_id']}: {user['currency']}" for user in top10]
         return ''.join(top10)
-    def getotherscurrency(user_id):
-        user = collection.find_one({"user_id": user_id})
-        if user == None:
-            return "User does not exist!"
-        elif user != None:
-            return f"{user['user_id']}: {user['currency']}"
     def rob(user_id, target_id, amount):
         if Database.checkifuser(user_id) == False:
             return "You do not have an account! Please use the command `/start` to get started!"
