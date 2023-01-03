@@ -308,7 +308,7 @@ async def leaderboard(interaction: discord.Interaction):
     
 @client.tree.command(name = "echo", description="Make the bot say something")
 @discord.app_commands.checks.has_role("tech support")
-async def echo(interaction: discord.Interaction, message):
+async def echo(interaction: discord.Interaction, message: str):
     await interaction.response.send_message(message)
     
 
