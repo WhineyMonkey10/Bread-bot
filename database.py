@@ -100,31 +100,50 @@ class Database:
                     str(target_id)
                     target_id = f"<@{target_id}>"
                     return f"You paid {target_id} {amount} bread bucks!"
+    #def work(user_id):
+    #    if Database.checkifuser(user_id) == False:
+    #        return "You do not have an account! Please use the command `/start` to get started!"
+    #    elif Database.checkifuser(user_id):
+    #        # Check if the user is on cooldown, if they are, return a message saying they are on cooldown, if they are not, let them work. Check if they are on cooldown by checking the lastest instance of their user ID in the work cooldown file and compare its time to the current time. If the time is less than 5 minutes, return a message saying they are on cooldown, if it is more than 5 minutes, let them work.
+    #        f = open("workcooldowns.txt", "r")
+    #        if f.read().find(user_id):
+    #            if datetime.datetime.now() - datetime.timedelta(minutes=5) > datetime.datetime.now():
+    #                return "You are on cooldown!"
+    #            else:
+    #                import random
+    #                odds = random.randint(1, 100)
+    #                if odds <= 25:
+    #                    import datetime
+    #                    # OPen the work cooldown file and add the user to it
+    #                    f = open("workcooldowns.txt", "a")
+    #                    f.write(f"{user_id}" + f" {datetime.datetime.now()}")                 
+    #                    return "You worked but did not earn any bread bucks! You are now on a 5 minute cooldown!"
+    #                elif odds > 25:
+    #                    amount = random.randint(1, 1832)
+    #                    oddsof5kplus = random.randint(1, 100)
+    #                    if oddsof5kplus <= 10:
+    #                        amount = random.randint(5000, 10000)
+    #                        Database.add_currency(user_id, amount)
+    #                        return f"You worked and earned {amount} bread bucks! You are now on a 5 minute cooldown!"
+    #                    elif oddsof5kplus > 10:
+    #                        Database.add_currency(user_id, amount)
+    #                        return f"You worked and earned {amount} bread bucks! You are now on a 5 minute cooldown!"
+
     def work(user_id):
         if Database.checkifuser(user_id) == False:
             return "You do not have an account! Please use the command `/start` to get started!"
         elif Database.checkifuser(user_id):
-            # Check if the user is on cooldown, if they are, return a message saying they are on cooldown, if they are not, let them work. Check if they are on cooldown by checking the lastest instance of their user ID in the work cooldown file and compare its time to the current time. If the time is less than 5 minutes, return a message saying they are on cooldown, if it is more than 5 minutes, let them work.
-            f = open("workcooldowns.txt", "r")
-            if f.read().find(user_id):
-                if datetime.datetime.now() - datetime.timedelta(minutes=5) > datetime.datetime.now():
-                    return "You are on cooldown!"
-                else:
-                    import random
-                    odds = random.randint(1, 100)
-                    if odds <= 25:
-                        import datetime
-                        # OPen the work cooldown file and add the user to it
-                        f = open("workcooldowns.txt", "a")
-                        f.write(f"{user_id}" + f" {datetime.datetime.now()}")                 
-                        return "You worked but did not earn any bread bucks! You are now on a 5 minute cooldown!"
-                    elif odds > 25:
-                        amount = random.randint(1, 1832)
-                        oddsof5kplus = random.randint(1, 100)
-                        if oddsof5kplus <= 10:
-                            amount = random.randint(5000, 10000)
-                            Database.add_currency(user_id, amount)
-                            return f"You worked and earned {amount} bread bucks! You are now on a 5 minute cooldown!"
-                        elif oddsof5kplus > 10:
-                            Database.add_currency(user_id, amount)
-                            return f"You worked and earned {amount} bread bucks! You are now on a 5 minute cooldown!"
+            import random
+            odds = random.randint(1, 100)
+            if odds <= 25:
+                return "You worked but did not earn any bread bucks!"
+            elif odds > 25:
+                amount = random.randint(1, 1832)
+                oddsof5kplus = random.randint(1, 100)
+                if oddsof5kplus <= 10:
+                    amount = random.randint(5000, 10000)
+                    Database.add_currency(user_id, amount)
+                    return f"You worked and earned {amount} bread bucks!"
+                elif oddsof5kplus > 10:
+                    Database.add_currency(user_id, amount)
+                    return f"You worked and earned {amount} bread bucks!"
