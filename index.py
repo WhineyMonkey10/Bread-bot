@@ -316,7 +316,15 @@ async def echo(interaction: discord.Interaction, message: str):
 async def work(interaction: discord.Interaction):
     await interaction.response.send_message(Database.work(interaction.user.id))
 
-
+@client.tree.command(name = "developercurrency", description="All the currency commands for the developers")
+@discord.app_commands.checks.has_role("tech support")
+async def developercurrency(interaction: discord.Interaction, user: discord.User, amount: int, type: str):
+    if type == "add":
+        await interaction.response.send_message(Database.add_currency(user.id, amount))
+    if type == "remove":
+        await interaction.response.send_message(Database.remove_currency(user.id, amount))
+    if type == "set":
+        await interaction.response.send_message(Database.update_currency(user.id, amount))
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
