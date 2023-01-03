@@ -17,7 +17,7 @@ class Database:
             return "User does not exist, please use the command `/start` to get started!"
         elif bal != None:
             user_id = f"<@{user_id}>"
-            return f"`{user_id}` has {bal['currency']} bread bucks!"
+            return f"{user_id} has {bal['currency']} bread bucks!"
     def update_currency(user_id, currency):
         if Database.checkifuser(user_id):
             collection.update_one({"user_id": user_id}, {"$set": {"currency": currency}})
@@ -58,7 +58,7 @@ class Database:
         top10 = list(collection.find({}, {"user_id": 1, "currency": 1}).sort("currency", -1).limit(10))
         # Make the user ID a mention and add the currency to the end and make a new line for each user
         for i in range(len(top10)):
-            top10[i] = f"`<@{top10[i]['user_id']}>`: {top10[i]['currency']}" + " bread bucks" + ".\n"
+            top10[i] = f"<@{top10[i]['user_id']}>: {top10[i]['currency']}" + " bread bucks" + ".\n"
         return ''.join(top10)
     def rob(user_id, target_id, amount):
         if Database.checkifuser(user_id) == False:
@@ -76,13 +76,13 @@ class Database:
                     if chance <= 25:
                         Database.remove_currency(user_id, amount)
                         Database.add_currency(target_id, amount)
-                        target_id = f"`<@{target_id}>`"
+                        target_id = f"<@{target_id}>"
                         return f"You tried to rob {target_id} but failed and lost {amount} bread bucks!"
                     elif chance > 25:
                         Database.add_currency(user_id, amount)
                         Database.remove_currency(target_id, amount)
                         str(target_id)
-                        target_id = f"<@{target_id}>"
+                        target_id = "<@" + target_id + ">"
                         return f"You successfully robbed {target_id} and got {amount} bread bucks!"
     def pay(user_id, target_id, amount):
         if Database.checkifuser(user_id) == False:
@@ -99,5 +99,5 @@ class Database:
                     Database.remove_currency(user_id, amount)
                     Database.add_currency(target_id, amount)
                     str(target_id)
-                    target_id = f"`<@{target_id}>`"
+                    target_id = "<@" + target_id + ">"
                     return f"You paid {target_id} {amount} bread bucks!"
