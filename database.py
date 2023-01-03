@@ -150,3 +150,23 @@ class Database:
                 elif oddsof5kplus > 10:
                     Database.add_currency(user_id, amount)
                     return f"You worked and earned {amount} bread bucks!"
+        
+    
+    class shop:
+        def __init__(self):
+            pass
+        def purchaseItems(user_id, item):
+            if Database.checkifuser(user_id) == False:
+                return "You do not have an account! Please use the command `/start` to get started!"
+            elif Database.checkifuser(user_id):
+                shopitems = {"swag cap": 3539, "bread": 150, "nerf gun": 10000, "actual gun": 20000}
+                # Find the price of the item
+                itemprice = shopitems[item]
+                # Check if the user has enough bread bucks
+                if Database.get_currency(user_id) < itemprice:
+                    return "You do not have enough bread bucks!"
+                elif Database.get_currency(user_id) >= itemprice:
+                    Database.remove_currency(user_id, itemprice)
+                    return f"You bought the item ``{item}`` for ``{itemprice}`` bread bucks!"
+                
+                    

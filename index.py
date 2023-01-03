@@ -338,10 +338,10 @@ async def shop(interaction: discord.Interaction):
     )
     embed.set_author(name = "Bread Bucks Bot")
     embed.set_thumbnail(url = "https://i.imgur.com/7v6Ux0W.png")
-    embed.add_field(name = "Swag Cap", value = "Price: 100 bread bucks", inline = False)
-    embed.add_field(name = "Bread", value = "Price: 25 bread bucks", inline = False)
-    embed.add_field(name = "Nerf Gun", value = "Price: 500 bread bucks", inline = False)
-    embed.add_field(name = "Actual Gun", value = "Price: 1000 bread bucks", inline = False)
+    embed.add_field(name = "Swag Cap", value = "Price: 3539 bread bucks", inline = False)
+    embed.add_field(name = "Bread", value = "Price: 150 bread bucks", inline = False)
+    embed.add_field(name = "Nerf Gun", value = "Price: 10000 bread bucks", inline = False)
+    embed.add_field(name = "Actual Gun", value = "Price: 20000 bread bucks", inline = False)
     embed.set_footer(text = "This is a work in progress")
     # Create the buttons
     swag_cap = discord.ui.Button(
@@ -371,6 +371,17 @@ async def shop(interaction: discord.Interaction):
     view.add_item(bread)
     view.add_item(nerf_gun)
     view.add_item(actual_gun)
+
+    # Make the buttons do something
+    if swag_cap.clicked:
+        await interaction.response.send_message(Database.shop.purchaseItems("swag cap"))
+    if bread.clicked:
+        await interaction.response.send_message(Database.shop.purchaseItems("bread"))
+    if nerf_gun.clicked:
+        await interaction.response.send_message(Database.shop.purchaseItems("nerf gun"))
+    if actual_gun.clicked:
+        await interaction.response.send_message(Database.shop.purchaseItems("actual gun"))
+    
     # Send the embed
     await interaction.response.send_message(embed=embed, view=view)
     
