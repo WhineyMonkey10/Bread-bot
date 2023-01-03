@@ -56,8 +56,9 @@ class Database:
     def get_leaderboard():
         # Get the User ID and Currency of all users and find the top 10 richest users
         top10 = list(collection.find({}, {"user_id": 1, "currency": 1}).sort("currency", -1).limit(10))
-        # Make the user ID a mention and add the currency to the end
-        top10 = [f"<@{user['user_id']}>: {user['currency']}" for user in top10]
+        # Make the user ID a mention and add the currency to the end and make a new line for each user
+        for i in range(len(top10)):
+            top10[i] = f"<@{top10[i]['user_id']}>: {top10[i]['currency']}" + " bread bucks" + ".\n"
         return ''.join(top10)
     def rob(user_id, target_id, amount):
         if Database.checkifuser(user_id) == False:
@@ -80,6 +81,7 @@ class Database:
                     elif chance > 25:
                         Database.add_currency(user_id, amount)
                         Database.remove_currency(target_id, amount)
+                        str(target_id)
                         target_id = f"<@{target_id}>"
                         return f"You successfully robbed {target_id} and got {amount} bread bucks!"
     def pay(user_id, target_id, amount):
@@ -96,5 +98,6 @@ class Database:
                 elif Database.get_currency(user_id) >= amount:
                     Database.remove_currency(user_id, amount)
                     Database.add_currency(target_id, amount)
+                    str(target_id)
                     target_id = f"<@{target_id}>"
                     return f"You paid {target_id} {amount} bread bucks!"
