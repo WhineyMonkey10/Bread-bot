@@ -293,7 +293,7 @@ async def pay(interaction: discord.Interaction, user: discord.User, amount: int)
 
 @client.tree.command(name = "rob", description="Rob a user's bread bucks")
 async def robuser(interaction: discord.Interaction, user: discord.User, amount: int):
-    await interaction.response.send_message(Database.rob_user(interaction.user.id, user.id, amount))
+    await interaction.response.send_message(Database.rob(interaction.user.id, user.id, amount))
     
 #TODO: @client.tree.command(name = "daily", description="Get your daily bread bucks")
 
