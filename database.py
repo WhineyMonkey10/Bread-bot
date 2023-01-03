@@ -73,10 +73,10 @@ class Database:
                     import random
                     chance = random.randint(1, 100)
                     if chance <= 25:
-                        amountlost = 75 / 100 * amount
-                        Database.remove_currency(user_id, amountlost)
-                        target_id = f"<@{target_id}>"
-                        return f"You tried to rob {target_id} but failed and lost {amount} bread bucks!"
+                        #amountlost = 75 / 100 * amount
+                        #Database.remove_currency(user_id, amountlost)
+                        #target_id = f"<@{target_id}>"
+                        return f"You tried to rob {target_id} but failed!"
                     elif chance > 25:
                         Database.add_currency(user_id, amount)
                         Database.remove_currency(target_id, amount)
