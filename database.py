@@ -177,7 +177,8 @@ class Database:
             if Database.checkifuser(user_id) == False:
                 return "You do not have an account! Please use the command `/start` to get started!"
             elif Database.checkifuser(user_id):
-                Database.shop.manageInventory(user_id, "view")
+                if Database.shop.manageInventory(user_id, "view") == None:
+                    return "Your inventory is empty, buy items from the ``shop`` command!"
         
         def manageInventory(user_id, action):
             if Database.checkifuser(user_id) == False:
