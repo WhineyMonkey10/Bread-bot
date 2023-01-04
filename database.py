@@ -44,7 +44,7 @@ class Database:
             return "User does not exist, please use the command `/start` to get started!"
 
     def deleteaccount(user_id):
-        collection.delete_one({"user_id": user_id})
+        collection.delete_many({"user_id": user_id})
         return "Account deleted!"
     
     def adduser(user_id):
