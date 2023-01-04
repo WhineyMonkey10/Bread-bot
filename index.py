@@ -372,10 +372,12 @@ async def shop(interaction: discord.Interaction):
     view.add_item(nerf_gun)
     view.add_item(actual_gun)
 
-    # Create the callback
-    async def callback(interaction: discord.Interaction):
-        if interaction.data["custom_id"] == "swag_cap":
-            await interaction.response.send_message(Database.buy(interaction.user.id, "swag_cap", 3539))
+    # Create the callback for the buttons
+    async def callback_swag(inter: discord.Interaction):
+        await inter.response.send_message("hi")
+
+    swag_cap.callback = callback_swag
+    
         
     # Send the embed
     await interaction.response.send_message(embed=embed, view=view)
