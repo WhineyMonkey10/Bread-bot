@@ -374,9 +374,18 @@ async def shop(interaction: discord.Interaction):
 
     # Create the callback for the buttons
     async def callback_swag(inter: discord.Interaction):
-        await inter.response.send_message("hi")
+        await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "swag_cap"))
+    async def callback_bread(inter: discord.Interaction):
+        await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "bread"))
+    async def callback_nerf_gun(inter: discord.Interaction):
+        await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "nerf_gun"))
+    async def callback_actual_gun(inter: discord.Interaction):
+        await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "actual_gun"))
 
     swag_cap.callback = callback_swag
+    bread.callback = callback_bread
+    nerf_gun.callback = callback_nerf_gun
+    actual_gun.callback = callback_actual_gun
     
         
     # Send the embed
