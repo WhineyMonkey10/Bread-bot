@@ -159,7 +159,7 @@ class Database:
             if Database.checkifuser(user_id) == False:
                 return "You do not have an account! Please use the command `/start` to get started!"
             elif Database.checkifuser(user_id):
-                shopitems = {"swag cap": 3539, "bread": 150, "nerf gun": 10000, "actual gun": 20000}
+                shopitems = {"swag cap": 3539, "bread": 150, "nerf_gun": 10000, "actual_gun": 20000}
                 # Find the price of the item
                 itemprice = shopitems[item]
                 # Check if the user has enough bread bucks
