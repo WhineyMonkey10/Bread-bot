@@ -1,8 +1,14 @@
-# A script that automatically starts the discord bot if it goes offline
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 import os
 
-# Check if the python script index.py is running
-while True:
-    if "python index.py" not in os.popen("ps -A").read():
-        # If it is not running, start it
-        os.system("python index.py")
+# Whenver a change in index.py is detected, restart index.py and close the old one. Also close all the nohup.out files.
+class MyHandler(FileSystemEventHandler):
+    def on_modified(self, event):
+        os.system("pkill -f index.py")
+        os.system("pkill -f nohup.out")
+        os.system("nohup python3 index.py &")
+
+observer = Observer()
+observer.schedule(MyHandler(), path='.')
+observer.start()
