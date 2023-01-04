@@ -192,12 +192,12 @@ class Database:
                     collection.update_one({"_id": user_id}, {"$set": {"inventory": []}})
                     return f"User ``{user_id}``'s inventory has been cleared!"
             elif action == "view":
-                userinv = collection.find_one({"_id": user_id})["inventory"]
-                if userinv == None:
+                if collection.find_one({"_id": user_id})["inventory"] == None:
                     return "Your inventory is empty, buy items from the ``shop`` command!"
-                
-                for i in range(len(userinv)):
-                    userinv[i] = f"``{userinv[i]}`` \n"
-                return ''.join(userinv)
+                elif collection.find_one({"_id": user_id})["inventory"] != None:
+                    userinv = collection.find_one({"_id": user_id})["inventory"]
+                    for i in range(len(userinv)):
+                        userinv[i] = f"``{userinv[i]}`` \n"
+                    return ''.join(userinv)
             elif action == "add":
                 pass
