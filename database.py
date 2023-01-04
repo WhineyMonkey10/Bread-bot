@@ -188,6 +188,9 @@ class Database:
                     return f"User ``{user_id}``'s inventory has been cleared!"
             elif action == "view":
                 userinv = collection.find_one({"_id": user_id})["inventory"]
+                if userinv == None:
+                    return "Your inventory is empty, buy items from the ``shop`` command!"
+                
                 for i in range(len(userinv)):
                     userinv[i] = f"``{userinv[i]}`` \n"
                 return ''.join(userinv)
