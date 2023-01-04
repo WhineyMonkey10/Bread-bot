@@ -174,27 +174,19 @@ class Database:
                     return "You do not have enough bread bucks!"
                 elif Database.get_currency(user_id) >= itemprice:
                     Database.remove_currency(user_id, itemprice)
-                    collection.update_one({"_id": user_id}, {"$push": {"inventory": item}})
+                    collection.update_one({"_id": user_id}, {"$addToSet": {"inventory": item}})
                     return f"You bought the item ``{item}`` for ``{itemprice}`` bread bucks!"
         
                 
-        def inventory(user_id):
-            
-            if Database.checkifuser(user_id) == False:
-                return "You do not have an account! Please use the command `/start` to get started!"
-            elif Database.checkifuser(user_id):
-                if Database.shop.manageInventory(user_id, "view") == None:
-                    return "Your inventory is empty, buy items from the ``shop`` command!"
-        
         def manageInventory(user_id, action):
             if Database.checkifuser(user_id) == False:
-                return "User does not have an account!"
+                return "Requested user does not have an account!"
             if action == "clear":
                 if Database.checkifuser(user_id):
                     collection.update_one({"_id": user_id}, {"$set": {"inventory": []}})
                     return f"User ``{user_id}``'s inventory has been cleared!"
             elif action == "view":
-                if collection.find_one({"_id": user_id})["inventory"] == None:
+                if collection.find_one({"_id": user_id})["inventory"] == None or collection.find_one({"_id": user_id})["inventory"] == []:
                     return "Your inventory is empty, buy items from the ``shop`` command!"
                 elif collection.find_one({"_id": user_id})["inventory"] != None:
                     userinv = collection.find_one({"_id": user_id})["inventory"]
