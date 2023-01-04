@@ -51,7 +51,7 @@ class Database:
         if Database.checkifuser(user_id):
             return "User already exists"
         elif Database.checkifuser(user_id) == False:
-            collection.insert_one({"user_id": user_id, "currency": 10000, "inventory": []})
+            collection.insert_one({"user_id": user_id, "currency": 10000, "inventory": ""})
             return True
     def start(user_id):
         if Database.adduser(user_id) == "User already exists":
@@ -174,7 +174,8 @@ class Database:
                     return "You do not have enough bread bucks!"
                 elif Database.get_currency(user_id) >= itemprice:
                     Database.remove_currency(user_id, itemprice)
-                    collection.update_one({"_id": user_id}, {"$addToSet": {"inventory": item}})
+                    # Store the user's inventory in a variable instead of a list as that is causing issues
+                    collection.update_one({"_id": user_id}, {"$push": {"inventory": item}})
                     return f"You bought the item ``{item}`` for ``{itemprice}`` bread bucks!"
         
                 
