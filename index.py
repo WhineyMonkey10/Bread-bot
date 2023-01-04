@@ -326,6 +326,8 @@ async def developercurrency(interaction: discord.Interaction, user: discord.User
         await interaction.response.send_message(Database.update_currency(user.id, amount))
     if type == "start_user":
         await interaction.response.send_message(Database.start(user.id))
+    if type == "clearinventory":    
+        await interaction.response.send_message(Database.shop.manageInventory(user.id, "clear"))
         
 @client.tree.command(name = "shop", description="A list of items you can buy using bread bucks")
 @discord.app_commands.checks.has_role("tech support")
@@ -390,6 +392,11 @@ async def shop(interaction: discord.Interaction):
         
     # Send the embed
     await interaction.response.send_message(embed=embed, view=view)
+
+
+@client.tree.command(name = "inventory", description="View your inventory")
+async def inventory(interaction: discord.Interaction):
+    await interaction.response.send_message(Database.shop.inventory(interaction.user.id))
     
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
