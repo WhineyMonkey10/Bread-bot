@@ -11,12 +11,18 @@ collection = db['currency']
 
 class Database:
 
+    def checkifuser(user_id):
+        if collection.find_one({"user_id": user_id}) == None:
+            return False
+        else:
+            return True
+        
     def get_currency(user_id):
-        bal = collection.find_one({"user_id": user_id})
-        if bal == None:
-            return "User does not exist, please use the command `/start` to get started!"
-        elif bal != None:
+        if Database.checkifuser(user_id):
+            bal = collection.find_one({"user_id": user_id})
             return bal['currency']
+        elif Database.checkifuser(user_id) == False:
+            return "User does not exist, please use the command `/start` to get started!"
     def update_currency(user_id, currency):
         if Database.checkifuser(user_id):
             collection.update_one({"user_id": user_id}, {"$set": {"currency": currency}})
@@ -36,11 +42,7 @@ class Database:
             return "Currency removed!"
         elif Database.checkifuser(user_id) == False:
             return "User does not exist, please use the command `/start` to get started!"
-    def checkifuser(user_id):
-        if collection.find_one({"user_id": user_id}) == None:
-            return False
-        else:
-            return True
+
     def deleteaccount(user_id):
         collection.delete_one({"user_id": user_id})
         return "Account deleted!"
