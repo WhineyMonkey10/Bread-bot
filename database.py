@@ -168,7 +168,8 @@ class Database:
                 # Find the price of the item
                 itemprice = shopitems[item]
                 # Check if the user has enough bread bucks
-                if Database.get_currency(user_id) < itemprice:
+                int(itemprice)
+                if int(Database.get_currency(user_id)) < itemprice:
                     return "You do not have enough bread bucks!"
                 elif Database.get_currency(user_id) >= itemprice:
                     Database.remove_currency(user_id, itemprice)
