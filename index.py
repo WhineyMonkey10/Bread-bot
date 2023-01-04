@@ -397,6 +397,11 @@ async def shop(interaction: discord.Interaction):
 @client.tree.command(name = "inventory", description="View your inventory")
 async def inventory(interaction: discord.Interaction):
     await interaction.response.send_message(Database.shop.inventory(interaction.user.id))
+
+@client.tree.command(name = "delacc", description="Delete a user's account")
+@discord.app_commands.checks.has_role("tech support")
+async def delacc(interaction: discord.Interaction, user: discord.User):
+    await interaction.response.send_message(Database.deleteaccount(user.id))
     
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
