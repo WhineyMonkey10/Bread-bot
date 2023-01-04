@@ -13,6 +13,7 @@ import sys
 import os
 from discord.ext.commands import has_role
 from database import Database
+import random
 
 python = sys.executable
 
@@ -233,9 +234,6 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
     else:
         await interaction.response.send_message("Invalid type! Valid types are: restart, shutdown, update, debug")
 
-
-
-
 @client.tree.command(name = "breadattack", description="Funny bread attack gif")
 async def breadattack(interaction: discord.Interaction):
     await interaction.response.send_message("https://cdn.discordapp.com/emojis/708895481886932992.gif?size=64")
@@ -405,6 +403,11 @@ async def inventory(interaction: discord.Interaction):
 async def delacc(interaction: discord.Interaction, user: discord.User):
     await interaction.response.send_message(Database.deleteaccount(user.id))
     
+
+@client.tree.command(name = "testupdate", description="Test the update on the breadbot")
+@discord.app_commands.checks.has_role("tech support")
+async def testupdate(interaction: discord.Interaction):
+    await interaction.response.send_message(f"Hi {random.random()}")
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
