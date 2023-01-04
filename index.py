@@ -214,8 +214,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
             f.write(f"\nBread bot has been updated for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
         os.system("git pull https://github.com/WhineyMonkey10/Bread-bot")
-        # Restzart the bot without actually killing the Python process
-        os.execl(sys.executable, sys.executable, *sys.argv)
+
 
         
 
