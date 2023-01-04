@@ -16,7 +16,7 @@ class Database:
         if bal == None:
             return "User does not exist, please use the command `/start` to get started!"
         elif bal != None:
-            return f"The requested user has {bal['currency']} bread bucks!"
+            return bal['currency']
     def update_currency(user_id, currency):
         if Database.checkifuser(user_id):
             collection.update_one({"user_id": user_id}, {"$set": {"currency": currency}})

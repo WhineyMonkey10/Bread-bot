@@ -282,7 +282,10 @@ async def delete(interaction: discord.Interaction, message_id: int):
 
 @client.tree.command(name = "balance", description="Get your bread bucks balance")
 async def balance(interaction: discord.Interaction, user: discord.User):
-    await interaction.response.send_message(Database.get_currency(user.id))
+    if Database.get_currency(user.id) == "User does not exist, please use the command `/start` to get started!":
+        await interaction.response.send_message("User does not exist, please use the command `/start` to get started!")
+    elif Database.get_currency(user.id) != "User does not exist, please use the command `/start` to get started!":
+        await interaction.response.send_message(f"The requested user has{Database.get_currency(user.id)} bread bucks")
 
 @client.tree.command(name = "pay", description="Pay someone bread bucks")
 async def pay(interaction: discord.Interaction, user: discord.User, amount: int):
