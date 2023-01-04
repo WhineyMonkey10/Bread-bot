@@ -378,7 +378,7 @@ async def shop(interaction: discord.Interaction):
     async def callback_bread(inter: discord.Interaction):
         await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "bread"), ephemeral=True)
     async def callback_nerf_gun(inter: discord.Interaction):
-        await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "nerf_gun"), emphemeral=True)
+        await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "nerf_gun"), ephemeral=True)
     async def callback_actual_gun(inter: discord.Interaction):
         await inter.response.send_message(Database.shop.purchaseItems(inter.user.id, "actual_gun"), ephemeral=True)
 
