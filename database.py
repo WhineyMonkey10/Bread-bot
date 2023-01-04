@@ -51,8 +51,7 @@ class Database:
         if Database.checkifuser(user_id):
             return "User already exists"
         elif Database.checkifuser(user_id) == False:
-            collection.insert_one({"user_id": user_id, "currency": 10000})
-            collection.insert_one({"user_id": user_id, "inventory": []})
+            collection.insert_one({"user_id": user_id, "currency": 10000, "inventory": []})
             return True
     def start(user_id):
         if Database.adduser(user_id) == "User already exists":
