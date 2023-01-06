@@ -143,7 +143,7 @@ async def commandlist(interaction: discord.Interaction) -> None:
 async def admincommands(interaction: discord.Interaction) -> None:
     embedVar = discord.Embed(title="Admin Commands", description="Commands only availible to mods/admins of the server :heart:", color=0x00ff00)
     embedVar.add_field(name="Peasant commands", value="You are able to access all the commands peasants can. To see their commands, simply run /commandlist", inline=False)
-    embedVar.add_field(name="Special Commands", value="/feedpeasant (@peasant/all), /admin_commands. More coming soon!", inline=False)
+    embedVar.add_field(name="Special Commands", value="/feedpeasant (@peasant/all), /admin_commands, /moderation. More coming soon!", inline=False)
     await interaction.response.send_message(embed=embedVar)
     with open('log.txt', "a") as f:
         f.write("\n(Admin) commandlist \n Command has been run at: " + time.ctime())
@@ -210,7 +210,7 @@ async def breadmanage(interaction: discord.Interaction, reason: str, type: str):
     elif type == "update":
         await interaction.response.send_message("Updating bread bot from github... this may take up to two minutes")
         channel = client.get_channel(1041458944813580288)
-        await channel.send("**New update to the bread bot!**\nRun the command /updateinfo to see the new command!")
+        await channel.send("**BREAD BOT UPDATE**\nInfo about the update: " + reason)
         with open('log.txt', "a") as f:
             f.write(f"\nBread bot has been updated for the reason {reason} \n Command has been run at: " + time.ctime())
             f.close()
@@ -462,50 +462,9 @@ async def moderation(interaction: discord.Interaction, user: discord.User, type:
         embed.add_field(name = "Moderator", value = interaction.user.mention, inline = False)
         embed.add_field(name = "Reason for kick", value = reason, inline = False)
         embed.set_footer(text = "This is a work in progress")
-    
-
-#@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
-#@discord.app_commands.checks.has_role("tech support")
-#async def deletemessage(interaction: discord.Interaction, messageid: ):
-#    channel = interaction.channel
-#    message = await channel.fetch_message(1040641649606410310)
-#    await message.delete()
-#    await interaction.response.send_message("Message deleted!", ephemeral=True)
- 
-
-
-#@client.tree.command(name = "kick", description="Kick a peasant")
-#@discord.app_commands.checks.has_role("mod")
-#async def kick(interaction: discord.Interaction, member: discord.Member, *, reason=None):
-#    await member.kick(reason=reason)
-#    await interaction.response.send_message(f"Kicked {member.mention}")
-#    with open('log.txt', "a") as f:
-#        f.write(f"\n{member} has been kicked for the reason {reason} \n Command has been run at: " + time.ctime())
-#        f.close()
-#
-
-#
-#@client.tree.command()
-#async def breadMute(ctx, user='None', reason = 'None'):
-#    role = discord.utils.find(lambda r: r.name == 'mod', ctx.message.author.roles)
-#    if role in ctx.author.roles:
-#        if user == 'None':
-#            await ctx.send('Please specify a user to mute :bread:')
-#        else:
-#            await ctx.send(f"Muting {user} :bread: lol imagine being muted")
-#            await timeout(20, user, reason)
-#            with open('log.txt', "a") as f:
-#                f.write("\nSomeone has muted " + user + "\n Command has been run at: " + time.ctime())
-#                f.close()
-#    else:
-#        await ctx.send('Youre goofy, you dont have the right permissions to use this command')
-#        with open('log.txt', "a") as f:
-#            f.write("\nSomeone has tried to mute " + user + "\n Command has been run at: " + time.ctime())
-#            f.close()
-#
-
-#user = ctx.message.author
-#await ctx.send(f'{user.mention} !bread is a command that sends a message saying "BREAD FOR LIFE BREAD FOR LOVE :bread:"') 
+        await interaction.response.send_message(embed=embed)
+    else:
+        await interaction.response.send_message("Invalid! Please use `mute`, `unmute`, `ban`, or `kick`")
     
 
 from dotenv import load_dotenv
