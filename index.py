@@ -408,6 +408,61 @@ async def delacc(interaction: discord.Interaction, user: discord.User):
 @discord.app_commands.checks.has_role("tech support")
 async def testupdate(interaction: discord.Interaction):
     await interaction.response.send_message(f"Hi {random.random()}")
+    
+@client.tree.command(name = "moderation", description="The moderation hub for the bot")
+@discord.app_commands.checks.has_role("tech support")
+async def moderation(interaction: discord.Interaction, user: discord.User, type: str, reason: str):
+    if type == "mute":
+        # Add the muted role to the user
+        muted_role = interaction.guild.get_role(1040641649606410310)
+        await user.add_roles(muted_role)
+        # Send the embed
+        embed = discord.Embed(
+            title = "Mute",
+            description = f"{user.mention} has been muted",
+            colour = discord.Colour.blue()
+        )
+        embed.set_author(name = "Bread Bot **MODERATION**")
+        embed.add_field(name = "Moderator", value = interaction.user.mention, inline = False)
+        embed.add_field(name = "Reason for mute", value = reason, inline = False)
+        embed.set_footer(text = "This is a work in progress")
+        await interaction.response.send_message(embed=embed)
+    elif type == "unmute":
+        muted_role = interaction.guild.get_role(1040641649606410310)
+        await user.remove_roles(muted_role)
+        embed = discord.Embed(
+            title = "Unmute",
+            description=f"{user.mention} has been unmuted",
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(name = "Bread Bot **MODERATION**")
+        embed.add_field(name = "Moderator", value = interaction.user.mention, inline = False)
+        embed.add_field(name = "Reason for unmute", value = reason, inline = False)
+        embed.set_footer(text = "This is a work in progress")
+        await interaction.response.send_message(embed=embed)
+    elif type == "ban":
+        await user.ban(reason=reason)
+        embed = discord.Embed(
+            title = "Ban",
+            description=f"{user.mention} has been banned",
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(name = "Bread Bot **MODERATION**")
+        embed.add_field(name = "Moderator", value = interaction.user.mention, inline = False)
+        embed.add_field(name = "Reason for ban", value = reason, inline = False)
+        embed.set_footer(text = "This is a work in progress")
+    elif type == "kick":
+        await user.kick(reason=reason)
+        embed = discord.Embed(
+            title = "Kick",
+            description=f"{user.mention} has been kicked",
+            colour=discord.Colour.blue()
+        )
+        embed.set_author(name = "Bread Bot **MODERATION**")
+        embed.add_field(name = "Moderator", value = interaction.user.mention, inline = False)
+        embed.add_field(name = "Reason for kick", value = reason, inline = False)
+        embed.set_footer(text = "This is a work in progress")
+    
 
 #@client.tree.command(name = "deletemessage", description="Delete a message") #this command is no longer needed
 #@discord.app_commands.checks.has_role("tech support")
