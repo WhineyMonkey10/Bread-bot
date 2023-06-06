@@ -22,9 +22,10 @@ class console: # Yay, first comment! :D I made this class to make my small brain
                # Cause im smart the code is extremely messy and full of bugs and no comments <3.
 
     def log(message):
-        with open("log.txt", "a") as f:
-            f.write(f"{message} + \n Command has been run at: {time.ctime()}")
-            f.close()
+        # with open("log.txt", "a") as f:
+        #     f.write(f"{message} + \n Command has been run at: {time.ctime()}")
+        #     f.close()
+        pass
 
 
 class SlashClient(discord.Client): # This is the class that handles slash commands, big thanks to Google for letting me copy paste code. Cause, honestly, who wants to write code when you can copy paste it? and thats what programmers do, right?
